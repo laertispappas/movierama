@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+
+@import "foundation_and_overrides";
+@import 'foundation-icons';
+
+html.turbolinks-progress-bar::before {
+    background-color: #00C900 !important;
+    height: 2px !important;
+}

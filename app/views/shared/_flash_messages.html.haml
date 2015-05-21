@@ -1,0 +1,6 @@
+.flass_message
+  - flash.each do |name, msg|
+    - if msg.is_a?(String)
+      %div{:class => "alert-box #{name}", "data-alert" => ""}
+        = msg
+        %button.close{:href => "#"} &times;

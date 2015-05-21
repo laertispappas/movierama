@@ -1,27 +1,27 @@
 source 'https://rubygems.org'
 ruby "2.2.1"
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
-# Use sqlite3 as the database for Active Record
 gem 'pg'
-# Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
-# Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
 
-# Use jquery as the JavaScript library
 gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+
+gem 'puma'
+gem 'haml'
+gem 'foundation-rails'
+gem 'foundation-icons-sass-rails'
+
+gem 'will_paginate', '~> 3.0.6'
+gem 'will_paginate-foundation'
+gem 'devise'
+gem 'simple_form'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -35,14 +35,37 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'rails_12factor', group: :production
 
 
+group :development do
+  gem 'guard-rspec'
+  gem 'libnotify'
+  gem 'spring-commands-rspec'
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem 'annotate', '~> 2.6.5' # annotate,  annotate --routes
+  gem "rails_best_practices"
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
-
+  gem 'dotenv-rails'
+  gem 'factory_girl_rails'
+  gem 'rspec-rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'faker'
+  gem 'brakeman', :require => false # aset test your app brakeman [brakeman -o output.html -o output.json]
+end
+
+group :test do
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'launchy'
+  gem 'poltergeist'
+  gem 'selenium-webdriver'
+  gem 'simplecov', require: false
 end
 
