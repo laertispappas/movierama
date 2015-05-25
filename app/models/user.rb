@@ -8,11 +8,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
 
-
-  def send_devise_notification(notification, *args)
-    devise_mailer.send(notification, self, *args).deliver_later
-  end
-
   def fullname
     self.fname.titleize + " " + self.lname.titleize
   end
