@@ -4,7 +4,11 @@ class MoviesController < ApplicationController
 
   def index
     params[:direction] = :desc unless params[:direction].present?
-    @movies = Movie.sort_by(sort_column, sort_direction).paginate(page: params[:page], per_page: 10)
+    if params[:query].present?
+      @movies = Movie.full_search(params[:query]).paginate(page: params[:page], per_page: 10)
+    else
+      @movies = Movie.sort_by(sort_column, sort_direction).paginate(page: params[:page], per_page: 10)
+    end
   end
 
   def new

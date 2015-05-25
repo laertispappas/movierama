@@ -172,6 +172,10 @@ GEM
       shellany (~> 0.0)
     orm_adapter (0.5.0)
     pg (0.18.1)
+    pg_search (0.7.9)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
+      arel
     poltergeist (1.6.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -341,6 +345,7 @@ DEPENDENCIES
   launchy
   libnotify
   pg
+  pg_search
   poltergeist
   puma
   rails (= 4.2.0)
