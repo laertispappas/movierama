@@ -3,7 +3,7 @@ class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :like, :hate, :unlike, :unhate]
 
   def index
-    @movies = Movie.all.paginate(page: params[:page], per_page: 10)
+    @movies = Movie.sort_by(params[:sort]).paginate(page: params[:page], per_page: 10)
   end
 
   def new

@@ -3,9 +3,10 @@
     .sub-nav
       %dl.sub-nav
         %dd{ class: "#{ 'active' if params[:likes] }" }
-          = link_to 'Likes', '#'
+          = link_to 'Likes', movies_path(sort: :likes)
         %dd{ class: "#{ 'active' if params[:hates] }" }
-          = link_to 'Hates', '#'
+          = link_to 'Hates', movies_path(sort: :hates)
         %dd{ class: "#{ 'active' if params[:date] }" }
-          = link_to 'Date', '#'
+          = link_to 'Date', movies_path(sort: :date)
 = render @movies
+= will_paginate @movies, renderer: FoundationPagination::Rails
