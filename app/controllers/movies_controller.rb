@@ -2,12 +2,13 @@ class MoviesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_movie, only: [:show, :like, :hate, :unvote]
 
+
   def index
     params[:direction] = :desc unless params[:direction].present?
     if params[:query].present?
-      @movies = Movie.full_search(params[:query]).paginate(page: params[:page], per_page: 10)
+      @movies = Movie.includes(:user).full_search(params[:query]).paginate(page: params[:page], per_page: 10)
     else
-      @movies = Movie.sort_by(sort_column, sort_direction).paginate(page: params[:page], per_page: 10)
+      @movies = Movie.includes(:user).sort_by(sort_column, sort_direction).paginate(page: params[:page], per_page: 10)
     end
   end
 
