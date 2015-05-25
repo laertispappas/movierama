@@ -1,9 +1,10 @@
 class MoviesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_movie, only: [:show, :like, :hate, :unlike, :unhate]
+  before_action :set_movie, only: [:show, :like, :hate, :unvote]
 
   def index
-    @movies = Movie.sort_by(params[:sort]).paginate(page: params[:page], per_page: 10)
+    params[:direction] = :desc unless params[:direction].present?
+    @movies = Movie.sort_by(sort_column, sort_direction).paginate(page: params[:page], per_page: 10)
   end
 
   def new
@@ -21,11 +22,9 @@ class MoviesController < ApplicationController
       if @movie.save
         flash[:success] = "Movie was successfully created."
         format.html { redirect_to @movie }
-#        format.json { render json: @poll, status: :created, location: @movie }
       else
         flash[:alert] = 'There was a problem creating movie'
-        render :new
-#        format.json { render json: @poll.errors, status: :unprocessable_entity }
+        format.html { render :new }
       end
     end
   end
@@ -40,12 +39,7 @@ class MoviesController < ApplicationController
     redirect_to movies_url
   end
 
-  def unlike
-    @movie.unvote_by current_user
-    redirect_to movies_url
-  end
-
-  def unhate
+  def unvote
     @movie.unvote_by current_user
     redirect_to movies_url
   end

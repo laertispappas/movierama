@@ -5,9 +5,9 @@
   %h6
     Posted by
     - if movie.user == current_user
-      = link_to 'You', '#'
+      = link_to 'You', user_movies_path(movie.user.id)
     - else
-      = link_to movie.user.fullname, '#'
+      = link_to movie.user.fullname, user_movies_path(movie.user.id)
     = time_ago_in_words movie.created_at
     ago
 
@@ -34,11 +34,11 @@
             - if current_user.voted_up_on? movie  # if current user has liked this movie
               You like this movie
               |
-              = link_to 'Unlike', unlike_movie_path(movie), method: :put
+              = link_to 'Unlike', unvote_movie_path(movie), method: :put
             - elsif current_user.voted_down_on? movie
               You hate this movie
               |
-              = link_to 'Unhate', unhate_movie_path(movie), method: :put
+              = link_to 'Unhate', unvote_movie_path(movie), method: :put
         - else  # not signed in
           - if movie.get_upvotes.size > 0 || movie.get_downvotes.size > 0
             = pluralize(movie.get_upvotes.size, 'like')
