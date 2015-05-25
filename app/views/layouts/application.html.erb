@@ -15,9 +15,9 @@
   <body>
     <%= render 'shared/header' %>
 
-    <div class="container">
-      <div class="row">
-        <%= render 'shared/flash_messages' %>
+    <%= render 'shared/flash_messages' %>
+    <div class="row">
+      <div class="large-9 columns" role="content">
         <%= yield %>
       </div>
     </div>

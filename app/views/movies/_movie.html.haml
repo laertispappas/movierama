@@ -1,0 +1,20 @@
+.panel
+  %h3
+    = link_to_unless_current movie.title, movie_path(movie)
+
+  %h6
+    Posted by
+    - if movie.user == current_user
+      = link_to 'You', '#'
+    - else
+      = link_to movie.user.fullname, '#'
+    = time_ago_in_words movie.created_at
+    ago
+
+  .row
+    .large-12.columns
+      %p
+        = movie.description
+
+
+

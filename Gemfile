@@ -22,6 +22,8 @@ gem 'will_paginate', '~> 3.0.6'
 gem 'will_paginate-foundation'
 gem 'devise'
 gem 'simple_form'
+gem 'rails_12factor', group: :production
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -32,8 +34,6 @@ gem 'simple_form'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'rails_12factor', group: :production
-
 
 group :development do
   gem 'guard-rspec'
@@ -42,7 +42,6 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem 'annotate', '~> 2.6.5' # annotate,  annotate --routes
-  gem "rails_best_practices"
 end
 
 group :development, :test do
