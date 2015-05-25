@@ -1,4 +1,4 @@
-.panel
+.panel.movie
   %h3
     = link_to_unless_current movie.title, movie_path(movie)
 
@@ -12,9 +12,34 @@
     ago
 
   .row
-    .large-12.columns
+    .small-12.columns
       %p
         = movie.description
-
-
-
+    .small-12.columns
+      .movie-footer
+        - if user_signed_in?
+          .left
+            - if movie.user == current_user # if this movie is current users movie
+              = pluralize(movie.get_upvotes.size, 'like')
+              = pluralize(movie.get_downvotes.size, 'hate')
+            - else # movie is not created by current user
+              - if movie.votes_for.size == 0    # if no votes yet be the first to vote
+                Be the first one to vote this movie:
+                = link_to 'like', like_movie_path(movie), method: :put
+                = link_to 'hate', hate_movie_path(movie), method: :put
+              - else # movie has some votes show likes and hates
+                = link_to_if !current_user.voted_up_on?(movie), pluralize(movie.get_upvotes.size, 'like'), like_movie_path(movie), method: :put
+                = link_to_if !current_user.voted_down_on?(movie), pluralize(movie.get_downvotes.size, 'hate'), hate_movie_path(movie), method: :put
+          .right
+            - if current_user.voted_up_on? movie  # if current user has liked this movie
+              You like this movie
+              |
+              = link_to 'Unlike', unlike_movie_path(movie), method: :put
+            - elsif current_user.voted_down_on? movie
+              You hate this movie
+              |
+              = link_to 'Unhate', unhate_movie_path(movie), method: :put
+        - else  # not signed in
+          - if movie.get_upvotes.size > 0 || movie.get_downvotes.size > 0
+            = pluralize(movie.get_upvotes.size, 'like')
+            = pluralize(movie.get_downvotes.size, 'hate')

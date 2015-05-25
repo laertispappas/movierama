@@ -36,6 +36,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    acts_as_votable (0.10.0)
     addressable (2.3.8)
     annotate (2.6.8)
       activerecord (>= 3.2, <= 4.3)
@@ -317,6 +318,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_votable
   annotate (~> 2.6.5)
   better_errors
   binding_of_caller

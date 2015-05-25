@@ -1,5 +1,6 @@
 class MoviesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_movie, only: [:show, :like, :hate, :unlike, :unhate]
 
   def index
     @movies = Movie.all.paginate(page: params[:page], per_page: 10)
@@ -10,7 +11,6 @@ class MoviesController < ApplicationController
   end
 
   def show
-    @movie = Movie.find(params[:id])
   end
 
   def create
@@ -30,10 +30,32 @@ class MoviesController < ApplicationController
     end
   end
 
+  def like
+    @movie.upvote_by current_user
+    redirect_to movies_url
+  end
+
+  def hate
+    @movie.downvote_by current_user
+    redirect_to movies_url
+  end
+
+  def unlike
+    @movie.unvote_by current_user
+    redirect_to movies_url
+  end
+
+  def unhate
+    @movie.unvote_by current_user
+    redirect_to movies_url
+  end
 
   private
-
   def movie_params
     params.require(:movie).permit(:title, :description)
+  end
+
+  def set_movie
+    @movie = Movie.find(params[:id])
   end
 end

@@ -1,3 +1,11 @@
-%h3 Index movie
-
+.row
+  .small-12.columns
+    .sub-nav
+      %dl.sub-nav
+        %dd{ class: "#{ 'active' if params[:likes] }" }
+          = link_to 'Likes', '#'
+        %dd{ class: "#{ 'active' if params[:hates] }" }
+          = link_to 'Hates', '#'
+        %dd{ class: "#{ 'active' if params[:date] }" }
+          = link_to 'Date', '#'
 = render @movies
