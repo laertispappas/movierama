@@ -14,7 +14,7 @@
   .row
     .small-12.columns
       %p
-        = movie.description
+        = simple_format movie.description
     .small-12.columns
       .movie-footer
         - if user_signed_in?
