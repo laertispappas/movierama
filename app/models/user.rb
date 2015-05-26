@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
     # Uncomment the section below if you want users to be created if they don't exist
      unless user
        passwd = Devise.friendly_token[0, 20]
-         user = User.create(fname: data["first_name"],
+         user = User.new(fname: data["first_name"],
             email: data["email"],
             lname: data["last_name"],
             password: passwd,
@@ -44,6 +44,8 @@ class User < ActiveRecord::Base
             uid: auth.uid
          )
      end
+    user.skip_confirmation!
+    user.save!
     user
   end
 end
