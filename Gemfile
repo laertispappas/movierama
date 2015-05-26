@@ -28,6 +28,8 @@ gem 'pg_search'
 gem 'validates_email_format_of'
 gem 'ancestry'
 gem "omniauth-google-oauth2"
+gem "themoviedb"
+
 #gem 'omniauth-facebook'
 
 # Use ActiveModel has_secure_password

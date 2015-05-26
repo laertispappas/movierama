@@ -3,7 +3,13 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  require 'themoviedb'
+  before_filter :set_config
+  Tmdb::Api.key("d229d13edc95a19b2c5e4ee208d40e58")
 
+  def set_config
+    @configuration = Tmdb::Configuration.new
+  end
 
   # don't trust user input
   def sort_column

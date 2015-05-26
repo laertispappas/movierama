@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
   get 'searches', to: 'searches#index', as: :search
+  get 'search', to: 'searches#search_movie_db', as: :search_moviedb
+  get 'search/:movie_id', to: 'searches#find_movie_db', as: :find_moviedb
+
   root 'movies#index'
   get '/user/:user_id/movies', to: 'profiles#movies', as: :user_movies
 

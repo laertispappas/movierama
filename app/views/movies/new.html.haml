@@ -1,4 +1,17 @@
+%h3
+  Search movie on moviedb
+
+%span.label.success Not Searching
+
+= form_tag search_moviedb_path, method: :get, remote: true, id: 'form-moviesdb' do
+  .row.collapse
+    .large-8.small-8.columns
+      = text_field_tag :query, params[:query], placeholder: 'Find movies', autocomplete: :off
+    .large-4.small-4.columns
+      = submit_tag 'Search', class: 'button tiny'
+
+
+%ul#searched-movie
 
 %h3 Create new movie
-
 = render 'form'
