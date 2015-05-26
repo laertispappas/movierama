@@ -44,5 +44,6 @@ class User < ActiveRecord::Base
             uid: auth.uid
          )
      end
+    user
   end
 end
