@@ -1,7 +1,10 @@
 .panel.movie
-  %h3
-    = link_to_unless_current movie.title, movie_path(movie)
-
+  .header.row
+    .left
+      %h3
+        = link_to_unless_current movie.title, movie_path(movie)
+    .right
+      = rating_for movie, "rate", :disable_after_rate => false, cancel_hint: 'Cancel this vote!'
   %h6
     Posted by
     - if movie.user == current_user

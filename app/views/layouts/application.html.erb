@@ -13,16 +13,15 @@
   </head>
 
   <body>
-    <%= render 'shared/header' %>
-
-    <%= render 'shared/flash_messages' %>
-    <div class="row">
-      <div class="large-9 columns" role="content">
-        <%= yield %>
+    <div class="wrap-container">
+      <%= render 'shared/header' %>
+      <%= render 'shared/flash_messages' %>
+      <div class="row">
+        <div class="large-9 columns" role="content">
+          <%= yield %>
+        </div>
       </div>
     </div>
-
     <%= render "shared/footer" %>
-
   </body>
 </html>

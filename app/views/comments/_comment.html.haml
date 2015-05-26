@@ -1,0 +1,14 @@
+%div
+    %p.user-comment-name-date
+        = link_to comment.user.fullname, user_movies_path(comment.user)
+        = time_ago_in_words(comment.created_at)
+        ago
+    %p.user-comment-text
+        = comment.content
+
+    - if user_signed_in?
+        %p.comment-reply-link
+            = link_to "Reply", new_polymorphic_path([@commentable, Comment.new], parent_id: comment), remote: true, class: 'reply-to-comment', id: "reply-#{comment.id}"
+    %p
+    .comment-nested-comments
+        = nested_comments comment.children

@@ -1,4 +1,6 @@
 class Movie < ActiveRecord::Base
+  ratyrate_rateable 'rate'
+
   include PgSearch
   acts_as_votable
 

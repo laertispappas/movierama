@@ -1,0 +1,9 @@
+.movie-comment-form
+    = form_for [@commentable, @comment] do |f|
+        .row
+            .large-9.medium-12.small-12.large-centered.columns
+                = f.text_area :content, placeholder: 'Share your thoughts', rows: 6, cols: 50
+                = f.hidden_field :parent_id
+        .row#post
+            .large-9.medium-12.small-12.large-centered.columns
+                = f.submit 'Post', class: 'button tiny right', data: { disable_with: 'Posting...' }
