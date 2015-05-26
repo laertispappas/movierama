@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  post '/rate' => 'rater#create', :as => 'rate'
   get 'searches', to: 'searches#index', as: :search
   root 'movies#index'
   get '/user/:user_id/movies', to: 'profiles#movies', as: :user_movies

@@ -27,7 +27,6 @@ gem 'acts_as_votable'
 gem 'pg_search'
 gem 'validates_email_format_of'
 gem 'ancestry'
-gem 'ratyrate'
 gem "omniauth-google-oauth2"
 #gem 'omniauth-facebook'
 
