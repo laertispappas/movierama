@@ -4,7 +4,7 @@
       %h3
         = link_to_unless_current movie.title, movie_path(movie)
     .right
-      = rating_for movie, "rate", :disable_after_rate => false, cancel_hint: 'Cancel this vote!'
+      = rating_for movie, "rate", :disable_after_rate => false, cancel_hint: 'Cancel this vote!', star_path: '/images/ratyrate'
   %h6
     Posted by
     - if movie.user == current_user
