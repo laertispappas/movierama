@@ -12,6 +12,9 @@ class Movie < ActiveRecord::Base
   pg_search_scope :full_search, :against => { :title => 'A', :description => 'B' },
                   using: { tsearch: { any_word: true, prefix: true, dictionary: 'english' } }
 
+
+
+  # sort by column. We axcept only likes hates and date as input from parameters
   def self.sort_by(column, direction)
     case column
       when 'likes'
@@ -22,6 +25,20 @@ class Movie < ActiveRecord::Base
         order(:created_at => direction)
       else
         order(:cached_votes_up => direction)
+    end
+  end
+
+  # need to reorder for search results from pg_search
+  def self.sort_search_results(column, direction)
+    case column
+      when 'likes'
+        reorder(:cached_votes_up => direction)
+      when 'hates'
+        reorder(:cached_votes_down => direction)
+      when 'date'
+        reorder(:created_at => direction)
+      else
+        reorder(:cached_votes_up => direction)
     end
   end
 end

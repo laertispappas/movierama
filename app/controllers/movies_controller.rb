@@ -4,14 +4,9 @@ class MoviesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_movie, only: [:show, :like, :hate, :unvote]
 
-
   def index
     params[:direction] = :desc unless params[:direction].present?
-    if params[:query].present?
-      @movies = Movie.includes(:user).full_search(params[:query]).paginate(page: params[:page], per_page: 10)
-    else
-      @movies = Movie.includes(:user).sort_by(sort_column, sort_direction).paginate(page: params[:page], per_page: 10)
-    end
+    @movies = Movie.includes(:user).sort_by(sort_column, sort_direction).paginate(page: params[:page], per_page: 10)
   end
 
   def new
@@ -38,17 +33,24 @@ class MoviesController < ApplicationController
 
   def like
     @movie.upvote_by current_user
-    redirect_to movies_url
+    respond_to do |format|
+      format.html { redirect_to(:back) }
+    end
   end
 
   def hate
     @movie.downvote_by current_user
-    redirect_to movies_url
+    respond_to do |format|
+      format.html { redirect_to(:back) }
+    end
   end
 
   def unvote
     @movie.unvote_by current_user
-    redirect_to movies_url
+
+    respond_to do |format|
+      format.html { redirect_to(:back) }
+    end
   end
 
   private

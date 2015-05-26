@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'searches', to: 'searches#index', as: :search
   root 'movies#index'
-
   get '/user/:user_id/movies', to: 'profiles#movies', as: :user_movies
 
   resources :movies, only: [:index, :new, :create, :show] do
