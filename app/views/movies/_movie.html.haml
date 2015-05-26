@@ -3,8 +3,6 @@
     .left
       %h3
         = link_to_unless_current movie.title, movie_path(movie)
-    .right
-
   %h6
     Posted by
     - if movie.user == current_user

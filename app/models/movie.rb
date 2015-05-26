@@ -1,11 +1,11 @@
 class Movie < ActiveRecord::Base
-  ratyrate_rateable 'rate'
 
   include PgSearch
   acts_as_votable
 
   belongs_to :user
   has_many :comments, as: :commentable, dependent: :destroy
+  has_many :ratings, dependent: :destroy
 
   validates_presence_of :title
   validates_presence_of :description
@@ -15,6 +15,12 @@ class Movie < ActiveRecord::Base
                   using: { tsearch: { any_word: true, prefix: true, dictionary: 'english' } }
 
 
+
+
+  def average_rating
+    return ratings.sum(:score) if ratings.size == 1
+    ratings.sum(:score) / (ratings.size - 1)
+  end
 
   # sort by column. We axcept only likes hates and date as input from parameters
   def self.sort_by(column, direction)

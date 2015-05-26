@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
   acts_as_voter # for likes/hates
-  ratyrate_rater # for star rating
+
   has_many :movies
   has_many :comments
+  has_many :ratings
 
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable and :omniauthable

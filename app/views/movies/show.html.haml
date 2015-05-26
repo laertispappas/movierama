@@ -1,5 +1,32 @@
-
 = render @movie
+
+%p Average rating
+#star
+
+:javascript
+  $('#star').raty({
+    readOnly: true,
+    score: "#{@movie.average_rating}",
+    path: '/assets'
+  });
+
+- if user_signed_in?
+  %p Your rating
+  #user_star
+
+  :javascript
+    $('#user_star').raty({
+      score: "#{@rating.score}",
+      path: '/assets',
+      click: function(score, evt) {
+        $.ajax({
+          url: '/ratings/' + "#{@rating.id}",
+          type: 'PATCH',
+          data: { score: score }
+        });
+      }
+    });
+
 .row
   .large-8.large-centered.columns
     %p.comments-count

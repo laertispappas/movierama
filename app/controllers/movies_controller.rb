@@ -14,6 +14,7 @@ class MoviesController < ApplicationController
   end
 
   def show
+    @rating = Rating.find_or_create_by(user_id: current_user.id, movie_id: @movie.id) if current_user
   end
 
   def create
