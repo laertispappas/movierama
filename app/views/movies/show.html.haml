@@ -1,2 +1,19 @@
 
 = render @movie
+.row
+  .large-8.large-centered.columns
+    %p.comments-count
+      Comments
+      = @movie.comments.size
+
+- if user_signed_in?
+  = render partial: 'comments/form'
+- else
+  .row
+    .large-8.large-centered.columns
+      %p
+        You must be logged in to leave a comment
+.row
+  .large-8.large-centered.columns
+    .comments-list
+      = nested_comments @comments

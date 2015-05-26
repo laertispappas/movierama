@@ -3,9 +3,11 @@ class Movie < ActiveRecord::Base
   acts_as_votable
 
   belongs_to :user
+  has_many :comments, as: :commentable, dependent: :destroy
 
   validates_presence_of :title
   validates_presence_of :description
+  validates :user, presence: true
 
   pg_search_scope :full_search, :against => { :title => 'A', :description => 'B' },
                   using: { tsearch: { any_word: true, prefix: true, dictionary: 'english' } }

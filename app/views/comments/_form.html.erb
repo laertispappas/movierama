@@ -1,0 +1,15 @@
+<div class="poll-comment-form">
+  <%= form_for [@commentable, @comment] do |f| %>
+      <div class="row">
+        <div class="large-8 medium-12 small-12 large-centered columns">
+          <%= f.text_area :content, placeholder: "Share your thoughts", rows: 6, cols: 50 %>
+          <%= f.hidden_field :parent_id %>
+        </div>
+      </div>
+      <div class="row" id="post">
+        <div class="large-8 medium-12 small-12 large-centered columns">
+          <%= f.submit "Post", class: "button tiny right", data: {disable_with: "Posting..."} %>
+        </div>
+      </div>
+  <% end %>
+</div>

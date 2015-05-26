@@ -18,24 +18,32 @@
     .small-12.columns
       .movie-footer
         - if user_signed_in?
+          - liked = false # use these variables to make one query to db to see if a user has voted on a movie
+          - hated = false
           .left
             - if movie.user == current_user # if this movie is current users movie
               = pluralize(movie.cached_votes_up, 'like')
               = pluralize(movie.cached_votes_down, 'hate')
             - else # movie is not created by current user
-              - if movie.votes_for.size == 0    # if no votes yet be the first to vote
+              - if((movie.cached_votes_up == 0) && (movie.cached_votes_down == 0))    # if no votes yet be the first to vote
                 Be the first one to vote this movie:
                 = link_to 'like', like_movie_path(movie), method: :put
                 = link_to 'hate', hate_movie_path(movie), method: :put
               - else # movie has some votes show likes and hates
-                = link_to_if !current_user.voted_up_on?(movie), pluralize(movie.cached_votes_up, 'like'), like_movie_path(movie), method: :put
-                = link_to_if !current_user.voted_down_on?(movie), pluralize(movie.cached_votes_down, 'hate'), hate_movie_path(movie), method: :put
+                - if current_user.voted_up_on?(movie)
+                  - liked = true
+                  - hated = false
+                - elsif current_user.voted_down_on?(movie)
+                  - liked = false
+                  - hated = true
+                = link_to_if !liked, pluralize(movie.cached_votes_up, 'like'), like_movie_path(movie), method: :put
+                = link_to_if !hated, pluralize(movie.cached_votes_down, 'hate'), hate_movie_path(movie), method: :put
           .right
-            - if current_user.voted_up_on? movie  # if current user has liked this movie
+            - if liked  # if current user has liked this movie
               You like this movie
               |
               = link_to 'Unlike', unvote_movie_path(movie), method: :put
-            - elsif current_user.voted_down_on? movie
+            - elsif hated
               You hate this movie
               |
               = link_to 'Unhate', unvote_movie_path(movie), method: :put

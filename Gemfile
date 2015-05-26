@@ -25,6 +25,8 @@ gem 'simple_form'
 gem 'rails_12factor', group: :production
 gem 'acts_as_votable'
 gem 'pg_search'
+gem 'validates_email_format_of'
+gem 'ancestry'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

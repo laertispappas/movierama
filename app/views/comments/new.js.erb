@@ -1,0 +1,7 @@
+
+// if reply link is submitted don't render form
+if ($("#comment-<%= escape_javascript @parent_id %>").children(".poll-comment-form").length) {
+    $("#comment-<%= escape_javascript @parent_id %>").children(".poll-comment-form").toggle(1000);
+}else {
+    $("<%= escape_javascript(render 'comments/form') %>").appendTo("#comment-<%= escape_javascript @parent_id %>").hide().show(1000);
+}
