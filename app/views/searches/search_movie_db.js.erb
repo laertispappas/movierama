@@ -1,6 +1,8 @@
 $("span.label").text("Not Searching");
 $("span.label").removeClass("alert");
 $("span.label").addClass("success");
+$("input").prop('disabled', false);
+
 
 <% @movies.each do |movie| %>
     $("#searched-movie").append("<li data-id=\"<%=movie.id%>\"> <a href='#'> <%= movie.title %> </a> (<%= movie.release_date %>) </li>");
