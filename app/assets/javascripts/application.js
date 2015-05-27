@@ -15,7 +15,8 @@
 //= require jquery_ujs
 //= require foundation
 //= require turbolinks
-//= require_tree .
+//= require jquery.raty
+//= require movies
 
 $(function(){ $(document).foundation(); });
 Turbolinks.enableProgressBar();
