@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b7d30ef0-6ef9-46c0-998c-75775114e84b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/initializers/carrier_wave.rb" afterPath="$PROJECT_DIR$/config/initializers/carrier_wave.rb" />
-    </list>
+    <list default="true" id="b7d30ef0-6ef9-46c0-998c-75775114e84b" name="Default" comment="" />
     <ignored path="karriera.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/tmp/" />
