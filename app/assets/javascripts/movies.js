@@ -5,7 +5,7 @@ $(document).on('submit','form#form-moviesdb',function(){
     $("span.label").text("Searching");
     $("#movie_title").val();
     $("#movie_description").val();
-
+    $("#searched-movie").empty();
     $("input").prop('disabled', true);
 
 });
