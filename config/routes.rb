@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   root 'movies#index'
   get '/user/:user_id/movies', to: 'profiles#movies', as: :user_movies
 
-  resources :ratings, only: :update
+  resources :ratings, only: [:update, :create]
 
   resources :movies, only: [:index, :new, :create, :show] do
     resources :comments, only: [:create, :new]

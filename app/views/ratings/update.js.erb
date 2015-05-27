@@ -15,3 +15,5 @@ $('#user_star').raty({
         }).done(function (data){});
     }
 });
+
+$("#average-rating-score").text("<%= @movie.average_rating %>");

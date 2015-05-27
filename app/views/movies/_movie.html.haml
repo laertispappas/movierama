@@ -23,10 +23,10 @@
           - hated = false
           .left
             - if movie.user == current_user # if this movie is current users movie
-              = pluralize(movie.cached_votes_up, 'like')
-              = pluralize(movie.cached_votes_down, 'hate')
+              = pluralize(movie.total_likes, 'like')
+              = pluralize(movie.total_hates, 'hate')
             - else # movie is not created by current user
-              - if((movie.cached_votes_up == 0) && (movie.cached_votes_down == 0))    # if no votes yet be the first to vote
+              - if(not movie.votes_for.any?)    # if no votes yet be the first to vote
                 Be the first one to vote this movie:
                 = link_to 'like', like_movie_path(movie), method: :put
                 = link_to 'hate', hate_movie_path(movie), method: :put
@@ -37,8 +37,8 @@
                 - elsif current_user.voted_down_on?(movie)
                   - liked = false
                   - hated = true
-                = link_to_if !liked, pluralize(movie.cached_votes_up, 'like'), like_movie_path(movie), method: :put
-                = link_to_if !hated, pluralize(movie.cached_votes_down, 'hate'), hate_movie_path(movie), method: :put
+                = link_to_if !liked, pluralize(movie.total_likes, 'like'), like_movie_path(movie), method: :put
+                = link_to_if !hated, pluralize(movie.total_hates, 'hate'), hate_movie_path(movie), method: :put
           .right
             - if liked  # if current user has liked this movie
               You like this movie
@@ -49,6 +49,6 @@
               |
               = link_to 'Unhate', unvote_movie_path(movie), method: :put
         - else  # not signed in
-          - if movie.cached_votes_up > 0 || movie.cached_votes_down > 0
-            = pluralize(movie.cached_votes_up, 'like')
-            = pluralize(movie.cached_votes_down, 'hate')
+          - if movie.votes_for.any?
+            = pluralize(movie.total_likes, 'like')
+            = pluralize(movie.total_hates, 'hate')

@@ -13,7 +13,6 @@ class CommentsController < ApplicationController
     end
   end
 
-
   def create
     if params[:parent_id].present?
 
@@ -24,7 +23,6 @@ class CommentsController < ApplicationController
                               :commentable_id => @commentable.id,
                               :commentable_type => @commentable.class.to_s)
     else
-      # create action
       @commentable = find_commentable
       @comment = @commentable.comments.build(comment_params)
       @comment.user = current_user

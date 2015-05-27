@@ -10,16 +10,26 @@ class Movie < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 5, maximum: 100 }
   validates :description, presence: true, length: { minimum: 20, maximum: 500 }
   validates :user_id, presence: true
+  validate :picture_size
 
   pg_search_scope :full_search, :against => { :title => 'A', :description => 'B' },
                   using: { tsearch: { any_word: true, prefix: true, dictionary: 'english' } }
 
+  mount_uploader :picture, PictureUploader
 
 
+
+  def total_likes
+    self.cached_votes_up
+  end
+
+  def total_hates
+    self.cached_votes_down
+  end
 
   def average_rating
-    return ratings.sum(:score) if ratings.size == 1
-    ratings.sum(:score) / (ratings.size - 1)
+    return ratings.sum(:score) if ratings.size == 0
+    ratings.sum(:score) / ratings.size
   end
 
   # sort by column. We axcept only likes hates and date as input from parameters
@@ -47,6 +57,13 @@ class Movie < ActiveRecord::Base
         reorder(:created_at => direction)
       else
         reorder(:cached_votes_up => direction)
+    end
+  end
+
+  private
+  def picture_size
+    if picture.size > 5.megabytes
+      errors.add(:picture, "should be less than 5MB")
     end
   end
 end
