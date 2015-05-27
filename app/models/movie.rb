@@ -7,9 +7,9 @@ class Movie < ActiveRecord::Base
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :ratings, dependent: :destroy
 
-  validates_presence_of :title
-  validates_presence_of :description
-  validates :user, presence: true
+  validates :title, presence: true, length: { minimum: 5, maximum: 100 }
+  validates :description, presence: true, length: { minimum: 20, maximum: 500 }
+  validates :user_id, presence: true
 
   pg_search_scope :full_search, :against => { :title => 'A', :description => 'B' },
                   using: { tsearch: { any_word: true, prefix: true, dictionary: 'english' } }

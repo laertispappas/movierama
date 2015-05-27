@@ -13,8 +13,8 @@ class User < ActiveRecord::Base
 
 
   validates :email, :email_format => { :message => 'is not looking good' }
-  validates :fname, presence: true, format: { with: /\A[a-zA-Z]+\Z/ }
-  validates :lname, presence: true, format: { with: /\A[a-zA-Z]+\Z/ }
+  validates :fname, presence: true, format: { with: /\A[a-zA-Z]+\Z/ }, length: { minimum: 4, maximum: 40 }
+  validates :lname, presence: true, format: { with: /\A[a-zA-Z]+\Z/ }, length: { minimum: 4, maximum: 40 }
 
 
 
