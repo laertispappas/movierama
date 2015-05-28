@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :ratings
 
+  before_save :capitalize_name
+
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -20,7 +22,7 @@ class User < ActiveRecord::Base
 
 
   def fullname
-    self.fname.titleize + " " + self.lname.titleize
+    self.fname + " " + self.lname
   end
 
   # extract info after auth authentication
@@ -43,4 +45,10 @@ class User < ActiveRecord::Base
     user.save!
     user
   end
+
+  def capitalize_name
+    self.fname = self.fname.capitalize if self.fname && !self.fname.blank?
+    self.lname = self.lname.capitalize if self.lname && !self.lname.blank?
+  end
+
 end

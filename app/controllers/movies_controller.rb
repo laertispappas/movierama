@@ -2,7 +2,9 @@ class MoviesController < ApplicationController
   include Commentable  # concern
 
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_movie, only: [:show, :like, :hate, :unvote]
+  before_action :set_movie, only: [:show, :like, :hate, :unvote, :edit, :update]
+  before_action :require_same_user, only: [:edit, :update] # require the user who created the movie to only update the movie
+
 
   # User cannot like/hate their own movie. Although we do not show the action on view we must force to deny it in controller
   before_action :user_cannot_like_their_own_movies, only: [:like, :hate, :unvote] # i.e. using curl
@@ -17,10 +19,25 @@ class MoviesController < ApplicationController
     @movie = Movie.new
   end
 
+  def edit
+  end
+
+  def update
+    respond_to do |format|
+      if @movie.update(movie_params)
+        format.html { redirect_to @movie, notice: 'Movie was successfully updated.' }
+        format.json { render :show, status: :ok, location: @movie }
+      else
+        format.html { render :edit }
+        format.json { render json: @movie.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def show
     @rating = Rating.find_or_initialize_by(user_id: current_user.id, movie_id: @movie.id) if current_user
     similar_movie_ids = current_user.recommendation_for @movie if current_user
-    @recommended_movies = Movie.find(similar_movie_ids) if similar_movie_ids
+    @recommended_movies = Movie.where(id: similar_movie_ids) if similar_movie_ids
   end
 
   def create
@@ -73,6 +90,13 @@ class MoviesController < ApplicationController
     if @movie.user == current_user
       flash[:alert] = "You can not like/hate your own movie"
       redirect_to movies_url
+    end
+  end
+
+  def require_same_user
+    if @movie.user != current_user
+      flash[:alert] = 'You cannot edit this movie'
+      redirect_to root_url
     end
   end
 

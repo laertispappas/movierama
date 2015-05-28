@@ -5,11 +5,12 @@ Rails.application.routes.draw do
   get 'search/:movie_id', to: 'searches#find_movie_db', as: :find_moviedb
 
   root 'movies#index'
-  get '/user/:user_id/movies', to: 'profiles#movies', as: :user_movies
+  get '/profile/:user_id/movies', to: 'profiles#movies', as: :user_movies
+  get '/profile/:user_id', to: 'profiles#show', as: :profile
 
   resources :ratings, only: [:update, :create]
 
-  resources :movies, only: [:index, :new, :create, :show] do
+  resources :movies, only: [:index, :new, :create, :show, :edit, :update] do
     resources :comments, only: [:create, :new]
     member do
       put "like", to: "movies#like"

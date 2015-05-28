@@ -1,6 +1,9 @@
 %h4
-  = link_to @user.fullname, '#'
+  = link_to @user.fullname, user_movies_path(@user)
   %small
     movies
+%h6
+  = link_to 'Profile', profile_path(@user)
+
 = render 'shared/sortable'
 = render @movies

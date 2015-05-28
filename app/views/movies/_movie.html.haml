@@ -3,9 +3,12 @@
     .left
       %h3
         = link_to_unless_current movie.title, movie_path(movie)
+    .right
+      - if user_signed_in? and current_user == movie.user
+        = link_to '[Edit]', edit_movie_path(movie)
   %h6
     Posted by
-    - if movie.user == current_user
+    - if user_signed_in? and movie.user == current_user
       = link_to 'You', user_movies_path(movie.user.id)
     - else
       = link_to movie.user.fullname, user_movies_path(movie.user.id)

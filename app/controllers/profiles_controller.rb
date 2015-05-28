@@ -1,5 +1,9 @@
 class ProfilesController < ApplicationController
 
+  def show
+    @user = User.find(params[:user_id])
+  end
+
   def movies
     params[:direction] = :desc unless params[:direction].present?
     @user = User.find(params[:user_id])

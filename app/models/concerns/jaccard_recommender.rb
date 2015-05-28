@@ -13,7 +13,8 @@ module JaccardRecommender extend ActiveSupport::Concern
       [m, s]
     end
     # When we have enough data we can return only movies that the user has not voted on yet
-    movies_scores.sort_by { |movie, sim| sim }.reverse[1..5].reject{ |movie, sim| sim < 0.5 }.map!{ |movie, sim| movie }
+    movies_scores.sort_by { |movie, sim| sim }.reverse[1..5].reject{ |movie, sim| sim < 0.5 }.map!{ |movie, sim| movie } unless movies_scores.empty?
+    movies_scores
   end
 
   def similarity_with(user)

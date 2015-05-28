@@ -1,7 +1,6 @@
 
 = image_tag @movie.picture.url, size: '250x250' if @movie.picture?
 = render @movie
-
 = render partial: 'movies/star_ratings'
 
 .recommendations{style: 'border-top: 2px solid #eee; margin-top: 50px;'}
