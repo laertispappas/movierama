@@ -2,9 +2,9 @@ class User < ActiveRecord::Base
   acts_as_voter # for likes/hates
   include JaccardRecommender  # concern
 
-  has_many :movies
-  has_many :comments
-  has_many :ratings
+  has_many :movies, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :ratings, dependent: :destroy
   has_many :rated_movies, through: :votes, source: :votable, source_type: 'Movie'
 
 
@@ -51,7 +51,8 @@ class User < ActiveRecord::Base
          )
      end
     user.skip_confirmation!
-    user.save!
+    user.confirm!
+    user.save
     user
   end
 

@@ -42,7 +42,7 @@ class MoviesController < ApplicationController
     @rating = Rating.find_or_initialize_by(user_id: current_user.id, movie_id: @movie.id) if current_user
     if current_user
       similar_movie_ids = current_user.recommendation_for @movie
-      @recommended_movies = Movie.where(id: similar_movie_ids) if similar_movie_ids
+      @recommended_movies = Movie.where(id: similar_movie_ids)
     end
   end
 

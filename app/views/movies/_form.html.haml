@@ -3,6 +3,7 @@
   = f.input :description, input_html: { rows: "8" }
 
   %span.picture
+    = f.label :picture
     = f.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
 
   = f.button :submit, class: "button"
