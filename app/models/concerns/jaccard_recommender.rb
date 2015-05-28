@@ -1,5 +1,7 @@
-# Recommendation engine using Jaccard similarity to find similar movies a user might like.
-#
+# Recommendation engine using Jaccard similarity to find similar movies a user might like (prototyping purposes).
+# TODO need to implement recommendation as a background job probably using redis (for its data stractures and because it is very fast)
+# TODO implement it using recommendify gem (collaborative filtering): https://github.com/paulasmuth/recommendify
+
 module JaccardRecommender extend ActiveSupport::Concern
 
   def recommendation_for(movie)
@@ -10,6 +12,7 @@ module JaccardRecommender extend ActiveSupport::Concern
       s = -1 if s.nan?
       [m, s]
     end
+    # When we have enough data we can return only movies that the user has not voted on yet
     movies_scores.sort_by { |movie, sim| sim }.reverse[1..5].reject{ |movie, sim| sim < 0.5 }.map!{ |movie, sim| movie }
   end
 
