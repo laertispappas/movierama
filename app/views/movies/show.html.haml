@@ -5,8 +5,8 @@
 = render partial: 'movies/star_ratings'
 
 .recommendations{style: 'border-top: 2px solid #eee;'}
-  %h3 Recommended for You
   - if @recommended_movies
+    %h3 Recommended for You
     - @recommended_movies.each do |recommended|
       %h5
         = link_to recommended.title, movie_path(recommended.id)

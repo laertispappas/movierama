@@ -1,8 +1,10 @@
 # Recommendation engine using Jaccard similarity to find similar movies a user might like.
+#
 module JaccardRecommender extend ActiveSupport::Concern
 
   def recommendation_for(movie)
     movies_scores = []
+
     Movie.all.collect{|m| movies_scores << self.prediction_for(m) unless m == movie }
     movies_scores.map! do |m, s|
       s = -1 if s.nan?
@@ -35,13 +37,11 @@ module JaccardRecommender extend ActiveSupport::Concern
 
     rated_by = item_total_likes + item_total_hates
 
-    # item.liked_by.each { |u| hive_mind_sum += self.similarity_with(u) }
     item.votes_for.where(vote_flag: true).all.map do |v|
       u = User.find(v.voter_id)
       hive_mind_sum += self.similarity_with(u)
     end
 
-    # item.disliked_by.each { |u| hive_mind_sum -= self.similarity_with(u) }
     item.votes_for.where(vote_flag: false).all.map do |v|
       u = User.find(v.voter_id)
       hive_mind_sum -= self.similarity_with(u)
