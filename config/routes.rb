@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   root 'movies#index'
   get '/profile/:user_id/movies', to: 'profiles#movies', as: :user_movies
   get '/profile/:user_id', to: 'profiles#show', as: :profile
+  get '/profile/:user_id/votes', to: 'profiles#votes', as: :user_votes
 
   resources :ratings, only: [:update, :create]
 

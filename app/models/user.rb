@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
   has_many :movies
   has_many :comments
   has_many :ratings
+  has_many :rated_movies, through: :votes, source: :votable, source_type: 'Movie'
+
+
+  #has_many :votes, :class_name => 'ActsAsVotable::Vote', :as => :voter
 
   before_save :capitalize_name
 

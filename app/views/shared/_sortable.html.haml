@@ -1,6 +1,8 @@
 .row
   .small-12.columns
     .sub-nav
+      %p.left
+        Sort by:
       %dl.sub-nav
         %dd{ class: "#{ 'active' if params[:sort] == 'likes' }" }
           = sortable 'likes', 'Likes'

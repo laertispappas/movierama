@@ -1,0 +1,14 @@
+.panel.center
+  %h4
+    = link_to @user.fullname, user_movies_path(@user)
+    .right
+      %small
+        User since:
+        = @user.created_at.strftime('%B %-d  %Y')
+  %ul.inline-list
+    %li
+      = link_to_unless_current 'Activity', profile_path(@user)
+    %li
+      = link_to_unless_current 'Movies', user_movies_path(@user)
+    %li
+      = link_to_unless_current 'Votes submited', user_votes_path(@user)

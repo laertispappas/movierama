@@ -55,3 +55,5 @@
           - if movie.votes_for.any?
             = pluralize(movie.total_likes, 'like')
             = pluralize(movie.total_hates, 'hate')
+
+= will_paginate @movies, renderer: FoundationPagination::Rails
