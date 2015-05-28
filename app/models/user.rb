@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   acts_as_voter # for likes/hates
-  include JaccardRecommender  # included from concerns folder
+  include JaccardRecommender  # concern
 
   has_many :movies
   has_many :comments
@@ -29,6 +29,11 @@ class User < ActiveRecord::Base
     self.fname + " " + self.lname
   end
 
+  def capitalize_name
+    self.fname = self.fname.capitalize if self.fname && !self.fname.blank?
+    self.lname = self.lname.capitalize if self.lname && !self.lname.blank?
+  end
+
   # extract info after auth authentication
   def self.from_omniauth(auth)
     data = auth.info
@@ -48,11 +53,6 @@ class User < ActiveRecord::Base
     user.skip_confirmation!
     user.save!
     user
-  end
-
-  def capitalize_name
-    self.fname = self.fname.capitalize if self.fname && !self.fname.blank?
-    self.lname = self.lname.capitalize if self.lname && !self.lname.blank?
   end
 
 end

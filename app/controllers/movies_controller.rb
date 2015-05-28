@@ -3,16 +3,20 @@ class MoviesController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_movie, only: [:show, :like, :hate, :unvote, :edit, :update]
-  before_action :require_same_user, only: [:edit, :update] # require the user who created the movie to only update the movie
+  before_action :require_same_user, only: [:edit, :update] # a movie can be updated by its owner only
 
 
-  # User cannot like/hate their own movie. Although we do not show the action on view we must force to deny it in controller
+  # User cannot like/hate their own movie. Although we do not show the action on view we must to deny it in controller
   before_action :user_cannot_like_their_own_movies, only: [:like, :hate, :unvote] # i.e. using curl
 
-
+  # show top movies based on reddit ranking algorithm: see models/concerns
   def index
+    @movies = Movie.order(:reddit_score => :desc).paginate(page: params[:page], per_page: 10)
+
     # sort_column, sort_direction are helper methods defined in Application controller
-    @movies = Movie.includes(:user).sort_by(sort_column, sort_direction).paginate(page: params[:page], per_page: 10)
+    if params[:sort].present?
+      @movies = Movie.includes(:user).sort_by(sort_column, sort_direction).paginate(page: params[:page], per_page: 10)
+    end
   end
 
   def new
@@ -36,8 +40,10 @@ class MoviesController < ApplicationController
 
   def show
     @rating = Rating.find_or_initialize_by(user_id: current_user.id, movie_id: @movie.id) if current_user
-    similar_movie_ids = current_user.recommendation_for @movie if current_user
-    @recommended_movies = Movie.where(id: similar_movie_ids) if similar_movie_ids
+    if current_user
+      similar_movie_ids = current_user.recommendation_for @movie
+      @recommended_movies = Movie.where(id: similar_movie_ids) if similar_movie_ids
+    end
   end
 
   def create
@@ -46,6 +52,7 @@ class MoviesController < ApplicationController
 
     respond_to do |format|
       if @movie.save
+        @movie.create_activity :create, owner: current_user
         flash[:success] = "Movie was successfully created."
         format.html { redirect_to @movie }
       else
@@ -57,12 +64,14 @@ class MoviesController < ApplicationController
 
   def like
     @movie.upvote_by current_user unless current_user.voted_up_for? @movie
+    @movie.update_reddit_score
     respond_to do |format|
       format.html { redirect_to(:back) }
     end
   end
   def hate
     @movie.downvote_by current_user unless current_user.voted_down_for? @movie
+    @movie.update_reddit_score
     respond_to do |format|
       format.html { redirect_to(:back) }
     end
@@ -70,6 +79,7 @@ class MoviesController < ApplicationController
 
   def unvote
     @movie.unvote_by current_user
+    @movie.update_reddit_score
 
     respond_to do |format|
       format.html { redirect_to(:back) }

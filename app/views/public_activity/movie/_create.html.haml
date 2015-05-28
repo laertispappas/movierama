@@ -1,0 +1,13 @@
+.feed-box.panel
+  %p
+    %i.fi-graph
+      = link_to activity.owner.fullname, profile_path(activity.owner)
+      - if a.trackable
+        created a new movie:
+        = link_to a.trackable.title, movie_path(a.trackable)
+      - else
+        added a movie that is currently deleted
+  .feed-box-bellow
+    = link_to 'Share', ''
+    %i.fi-clock.right
+      = a.created_at.strftime('%H:%M:%S %-d %B %Y')

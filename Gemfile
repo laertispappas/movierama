@@ -33,6 +33,7 @@ gem "themoviedb"
 gem 'carrierwave'
 gem "mini_magick"
 gem 'fog'
+gem 'public_activity'
 
 group :development do
   gem 'guard-rspec'

@@ -1,4 +1,8 @@
 
 = render partial: 'profiles/user_header'
+
+= render_activities(@activities)
+= will_paginate @activities, renderer: FoundationPagination::Rails
+
 = render partial: 'profiles/most_popular'
 

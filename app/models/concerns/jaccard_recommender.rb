@@ -12,9 +12,10 @@ module JaccardRecommender extend ActiveSupport::Concern
       s = -1 if s.nan?
       [m, s]
     end
-    # When we have enough data we can return only movies that the user has not voted on yet
-    movies_scores.sort_by { |movie, sim| sim }.reverse[1..5].reject{ |movie, sim| sim < 0.5 }.map!{ |movie, sim| movie } unless movies_scores.empty?
-    movies_scores
+
+    # sorts similarity array and get the first top 5 movies. Similarity: [-1, 1].
+    movies_scores.sort_by!{ |movie, sim| sim }.reject!{ |movie, sim| (sim < 0.3) }.map!{ |movie, sim| movie } unless movies_scores.empty?
+    movies_scores[1..5]
   end
 
   def similarity_with(user)
@@ -36,19 +37,23 @@ module JaccardRecommender extend ActiveSupport::Concern
 
   def prediction_for(item)
     hive_mind_sum = 0.0
-    item_total_likes = item.votes_for.where(vote_flag: true).size
-    item_total_hates = item.votes_for.where(vote_flag: false).size
+    item_total_likes = item.get_up_votes.size
+    item_total_hates = item.get_down_votes.size
 
     rated_by = item_total_likes + item_total_hates
 
-    item.votes_for.where(vote_flag: true).all.map do |v|
+    item.get_up_votes.map do |v|
       u = User.find(v.voter_id)
-      hive_mind_sum += self.similarity_with(u)
+      if u != self
+        hive_mind_sum += self.similarity_with(u)
+      end
     end
 
-    item.votes_for.where(vote_flag: false).all.map do |v|
+    item.get_down_votes.map do |v|
       u = User.find(v.voter_id)
-      hive_mind_sum -= self.similarity_with(u)
+      if u != self
+        hive_mind_sum -= self.similarity_with(u)
+      end
     end
 
     result =  hive_mind_sum / rated_by.to_f
