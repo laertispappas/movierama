@@ -5,12 +5,14 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version: 2.2.1
 
-* System dependencies
+* System dependencies: Imagemagick
 
 * Configuration
-
+    - EMAIL (smtp on production (config/environments/production), mailcatcher on development)
+    - Amazon AWS (production env variables)
+    -
 * Database creation
 
 * Database initialization
@@ -22,8 +24,3 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
-
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.

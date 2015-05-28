@@ -33,7 +33,7 @@ class MovieTest < ActiveSupport::TestCase
   end
 
   test 'description should not be too long' do
-    @movie.description = 'a'*501
+    @movie.description = 'a'*1001
     assert_not @movie.valid?
   end
 

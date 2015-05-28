@@ -2,52 +2,14 @@
 = image_tag @movie.picture.url, size: '250x250' if @movie.picture?
 = render @movie
 
-.average-rating
-  Average rating (
-  %span#average-rating-score
-    = @movie.average_rating
-  )
-#star
+= render partial: 'movies/star_ratings'
 
-:javascript
-  $('#star').raty({
-    readOnly: true,
-    score: "#{@movie.average_rating}",
-    path: '/assets'
-  });
-
-- if user_signed_in?
-  %p
-  .user-rating
-    Your rating
-  #user_star
-
-  - if @rating.new_record?
-    :javascript
-      $('#user_star').raty({
-        score: "#{@rating.score}",
-        path: '/assets',
-        click: function(score, evt) {
-          $.ajax({
-            url: '/ratings/',
-            type: 'POST',
-            data: { score: score, movie_id: '#{@movie.id}' }
-          });
-        }
-      });
-  - else
-    :javascript
-      $('#user_star').raty({
-        score: "#{@rating.score}",
-        path: '/assets',
-        click: function(score, evt) {
-          $.ajax({
-            url: '/ratings/' + "#{@rating.id}",
-            type: 'PATCH',
-            data: { score: score }
-          });
-        }
-      });
+.recommendations{style: 'border-top: 2px solid #eee;'}
+  %h3 Recommended for You
+  - if @recommended_movies
+    - @recommended_movies.each do |recommended|
+      %h5
+        = link_to recommended.title, movie_path(recommended.id)
 
 .row
   .large-8.large-centered.columns

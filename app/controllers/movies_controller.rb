@@ -19,6 +19,8 @@ class MoviesController < ApplicationController
 
   def show
     @rating = Rating.find_or_initialize_by(user_id: current_user.id, movie_id: @movie.id) if current_user
+    similar_movie_ids = current_user.recommendation_for @movie if current_user
+    @recommended_movies = Movie.find(similar_movie_ids) if similar_movie_ids
   end
 
   def create

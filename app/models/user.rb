@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   acts_as_voter # for likes/hates
+  include JaccardRecommender  # included from concerns folder
 
   has_many :movies
   has_many :comments
@@ -24,13 +25,6 @@ class User < ActiveRecord::Base
 
   # extract info after auth authentication
   def self.from_omniauth(auth)
-#    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-#      user.provider = auth.provider
-#      user.uid = auth.uid
-#      user.email = auth.info.email
-#      user.password = Devise.friendly_token[0,20]
-#    end
-
     data = auth.info
     user = User.where(:email => data["email"]).first
     # Uncomment the section below if you want users to be created if they don't exist
