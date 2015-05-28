@@ -10,6 +10,8 @@
     - @recommended_movies.each do |recommended|
       %h5
         = link_to recommended.title, movie_path(recommended.id)
+  - else
+    %h5 No recommendations for you yet
 
 .row
   .large-8.large-centered.columns
