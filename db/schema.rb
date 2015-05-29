@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150528230018) do
+ActiveRecord::Schema.define(version: 20150529115413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20150528230018) do
   add_index "movies", ["cached_votes_down"], name: "index_movies_on_cached_votes_down", using: :btree
   add_index "movies", ["cached_votes_total"], name: "index_movies_on_cached_votes_total", using: :btree
   add_index "movies", ["cached_votes_up"], name: "index_movies_on_cached_votes_up", using: :btree
+  add_index "movies", ["reddit_score"], name: "index_movies_on_reddit_score", using: :btree
   add_index "movies", ["user_id"], name: "index_movies_on_user_id", using: :btree
 
   create_table "ratings", force: :cascade do |t|

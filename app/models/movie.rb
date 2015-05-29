@@ -36,6 +36,11 @@ class Movie < ActiveRecord::Base
     ratings.sum(:score) / ratings.size
   end
 
+  # check if user has created this movie
+  def created_by(user)
+    self.user == user
+  end
+
   private
   def picture_size
     if picture.size > 5.megabytes

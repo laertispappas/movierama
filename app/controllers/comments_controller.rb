@@ -2,8 +2,8 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def new
-    @parent_id = params.delete(:parent_id)    # if of parent comment
-    @commentable = find_commentable           # movie...
+    @parent_id = params.delete(:parent_id)    # if comment is nested
+    @commentable = find_commentable           # find movie
     @comment = Comment.new( :parent_id => @parent_id,
                             :commentable_id => @commentable.id,
                             :commentable_type => @commentable.class.to_s)
@@ -16,7 +16,6 @@ class CommentsController < ApplicationController
   def create
     if params[:parent_id].present?
 
-      # new action
       @parent_id = params.delete(:parent_id)
       @commentable = find_commentable
       @comment = Comment.new( :parent_id => @parent_id,

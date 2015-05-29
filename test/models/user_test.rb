@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user = User.new(fname: 'laertis', lname: 'pappas', email: 'laertis.pappas@gmail.com', password: 'pappaspappas', password_confirmation: 'pappaspappas')
+    @user = users(:user1)
   end
 
   test 'user should be valid' do
@@ -24,6 +24,14 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
 
+  test 'fname should contain only letters' do
+    @user.fname = @user.fname + '1'
+    assert_not @user.valid?
+
+    @user.fname = @user.fname + '#'
+    assert_not @user.valid?
+  end
+
   test 'lname should be present' do
     @user.lname = ' '
     assert_not @user.valid?
@@ -36,6 +44,14 @@ class UserTest < ActiveSupport::TestCase
 
   test 'lname should not be too long' do
     @user.lname = 'a' * 41
+    assert_not @user.valid?
+  end
+
+  test 'lname should contain only letters' do
+    @user.lname = 'pasp2'
+    assert_not @user.valid?
+
+    @user.lname = '#$%%^^'
     assert_not @user.valid?
   end
 

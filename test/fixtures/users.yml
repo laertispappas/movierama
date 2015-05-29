@@ -5,7 +5,15 @@
 # below each fixture, per the syntax in the comments below
 #
 
-laertis:
-  email: 'laertis.pappas@gmail.com'
+user1:
+  email: 'lapis.pappas@gmail.com'
   fname: 'Laertis'
   lname: 'Pappas'
+  confirmed_at: <%= Time.now %>
+
+user2:
+  email: 'kostas.pappas@gmail.com'
+  fname: 'kostas'
+  lname: 'pappas'
+  confirmed_at: <%= Time.now %>
+

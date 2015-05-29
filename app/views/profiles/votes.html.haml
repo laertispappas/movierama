@@ -1,7 +1,7 @@
 = render partial: 'profiles/user_header'
-- if @movies_voted.any?
+- if @movies.any?
   = render 'shared/sortable'
-  = render @movies_voted
-  = will_paginate @movies_voted, renderer: FoundationPagination::Rails
+  = render @movies
+  = will_paginate @movies, renderer: FoundationPagination::Rails
 - else
   %h3 No votes

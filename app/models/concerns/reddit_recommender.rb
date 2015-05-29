@@ -37,8 +37,8 @@ module RedditRecommender extend ActiveSupport::Concern
   # return movies score based on reddit algorithm
   def movie_score(movie = self)
     movie_date = movie.created_at.to_datetime
-    likes = movie.get_up_votes.size
-    hates = movie.get_down_votes.size
+    likes = movie.cached_votes_up
+    hates = movie.cached_votes_down
     hot(likes, hates, movie_date)
   end
 

@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   acts_as_voter # for likes/hates
-  include JaccardRecommender  # concern
+  include JaccardRecommender  # concern need refactor only for demonstration!!!
 
   has_many :movies, dependent: :destroy
   has_many :comments, dependent: :destroy

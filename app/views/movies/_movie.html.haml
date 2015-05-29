@@ -22,26 +22,27 @@
     .small-12.columns
       .movie-footer
         - if user_signed_in?
-          - liked = false # use these variables to make one query to db to see if a user has voted on a movie
+          - liked = false # flags to check if users has liked or hated a movie.
           - hated = false
           .left
-            - if movie.user == current_user # if this movie is current users movie
-              = pluralize(movie.total_likes, 'like')
-              = pluralize(movie.total_hates, 'hate')
+            - # if this movie is current users movie show likes and hates with no link to vote
+            - if movie.user == current_user # && movie.cached_votes_total > 0  uncomment this if we want to hide counter for 0 votes
+              = pluralize(movie.cached_votes_up, 'like')
+              = pluralize(movie.cached_votes_down, 'hate')
             - else # movie is not created by current user
-              - if(not movie.votes_for.any?)    # if no votes yet be the first to vote
+              - if(movie.cached_votes_total == 0)    # if no votes yet be the first to vote
                 Be the first one to vote this movie:
                 = link_to 'like', like_movie_path(movie), method: :put
                 = link_to 'hate', hate_movie_path(movie), method: :put
               - else # movie has some votes show likes and hates
-                - if current_user.voted_up_on?(movie)
+                - if @current_user_movie_likes_ids.include?(movie.id)
                   - liked = true
                   - hated = false
-                - elsif current_user.voted_down_on?(movie)
+                - elsif @current_user_movie_hates_ids.include?(movie.id)
                   - liked = false
                   - hated = true
-                = link_to_if !liked, pluralize(movie.total_likes, 'like'), like_movie_path(movie), method: :put
-                = link_to_if !hated, pluralize(movie.total_hates, 'hate'), hate_movie_path(movie), method: :put
+                = link_to_if !liked, pluralize(movie.cached_votes_up, 'like'), like_movie_path(movie), method: :put
+                = link_to_if !hated, pluralize(movie.cached_votes_down, 'hate'), hate_movie_path(movie), method: :put
           .right
             - if liked  # if current user has liked this movie
               You like this movie
@@ -52,7 +53,6 @@
               |
               = link_to 'Unhate', unvote_movie_path(movie), method: :put
         - else  # not signed in
-          - if movie.votes_for.any?
-            = pluralize(movie.total_likes, 'like')
-            = pluralize(movie.total_hates, 'hate')
-
+          - if movie.cached_votes_total > 0
+            = pluralize(movie.cached_votes_up, 'like')
+            = pluralize(movie.cached_votes_down, 'hate')

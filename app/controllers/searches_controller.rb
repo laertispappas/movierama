@@ -1,12 +1,18 @@
 class SearchesController < ApplicationController
 
+
+  # explanation for @current_user_movie_likes_ids is explained in movies#index or ApplicationController
   def index
     if params[:query].present?
       @movies = Movie.includes(:user).full_search(params[:query]).sort_search_results(sort_column, sort_direction).paginate(page: params[:page], per_page: 10)
+      current_user_voted_movies_ids(@movies)  # inherit from application controller
     else
-      @movies = Movie.includes(:user).sort_by(sort_column, sort_direction).paginate(page: params[:page], per_page: 10)
+      @movies = []
+      @current_user_movie_likes_ids = []
+      @current_user_movie_hates_ids = []
     end
   end
+
 
   # find movie details from moviedb API
   def find_movie_db
