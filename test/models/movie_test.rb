@@ -17,11 +17,6 @@ class MovieTest < ActiveSupport::TestCase
     assert_not @movie.valid?
   end
 
-  test 'title length should not be too short' do
-    @movie.title = 'aaaa'
-    assert_not @movie.valid?
-  end
-
   test 'title length should not be too long' do
     @movie.title = 'a' * 101
     assert_not @movie.valid?
