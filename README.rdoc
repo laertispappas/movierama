@@ -25,13 +25,3 @@ Things you may want to cover:
 
 * ...
 
-TODO
-MOST POPULAR MOVIES
-
-MOVIES INDEX DEFAULT TOP MOVIES ON TOP
-    Maybe you could just take the SO approach? it seems rather decent.
-
-    + gives 10 points
-    - substracts 2 points
-    view add a low number, like 0.01 point
-    comment add 2 points
