@@ -246,6 +246,8 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
+    immigrant (0.3.4)
+      activerecord (>= 3.0)
     inflecto (0.0.2)
     ipaddress (0.8.0)
     jbuilder (2.2.16)
@@ -486,6 +488,7 @@ DEPENDENCIES
   foundation-rails
   guard-rspec
   haml
+  immigrant
   jbuilder (~> 2.0)
   jquery-rails
   jquery-turbolinks

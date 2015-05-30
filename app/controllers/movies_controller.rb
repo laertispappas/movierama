@@ -1,4 +1,6 @@
 class MoviesController < ApplicationController
+  respond_to :html, :js
+
   include Commentable  # concern
 
   before_action :authenticate_user!, except: [:index, :show]
@@ -21,6 +23,12 @@ class MoviesController < ApplicationController
     end
     # iherited from Application controller
     current_user_voted_movies_ids(@movies)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+
   end
 
   def new

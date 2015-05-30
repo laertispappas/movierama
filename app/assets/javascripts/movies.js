@@ -1,4 +1,4 @@
-
+// moviedb API search
 $(document).on('submit','form#form-moviesdb',function(){
     $("span.label").removeClass("success");
     $("span.label").addClass("alert");
@@ -28,3 +28,43 @@ $(document).on("click", "#searched-movie a", function(){
 
     }});
 });
+
+$(document).ready(function() {
+    $('.pagination a').on('click', function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        if (url) {
+            $("#movies").empty();
+            $('.pagination').text("Please Wait...");
+//            $.getScript(url);
+                var data;
+                $.ajax({
+                    cacheRequest: true,
+                    type: "GET",
+                    url: url,
+                    dataType: "script",
+                    success: function(data) {
+                        console.log(data)
+                    }
+                });
+        }
+    });
+});
+
+/* uncomment for infinite scrolling */
+/*
+$(document).ready(function() {
+    if ($('.pagination').length) {
+        $(window).scroll(function() {
+            var url = $('.current').next().children().first().attr('href');
+            if (url && $(window).scrollTop() > $(document).height() - $(window).height() - 50) {
+                $('.pagination').text("Please Wait...");
+                console.log(url);
+                return $.getScript(url);
+            }
+        });
+        return $(window).scroll();
+    }
+});
+
+*/

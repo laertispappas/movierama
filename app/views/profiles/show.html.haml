@@ -1,7 +1,10 @@
 
 = render partial: 'profiles/user_header'
 
-= render_activities(@activities)
-= will_paginate @activities, renderer: FoundationPagination::Rails
+.row
+  .large-5.medium-5.small-12.columns
+    = render partial: 'profiles/most_popular'
 
-= render partial: 'profiles/most_popular'
+  .large-7.medium-7.small-12.columns
+    = render_activities(@activities)
+    = will_paginate @activities, renderer: FoundationPagination::Rails

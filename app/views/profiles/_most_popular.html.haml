@@ -1,9 +1,6 @@
 %ul.pricing-table
-  %li.price
+  %h3
     Your most popular movies
-  %li.description
-    = link_to 'Spiderman', '#'
-  %li.description
-    = link_to 'Batman', '#'
-  %li.description
-    = link_to 'Gotham', '#'
+  - @most_popular_movies.each do |movie|
+    %h5
+      = link_to movie.title, movie_path(movie)
