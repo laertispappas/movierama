@@ -6,5 +6,6 @@
     = render partial: 'profiles/most_popular'
 
   .large-7.medium-7.small-12.columns
-    = render_activities(@activities)
-    = will_paginate @activities, renderer: FoundationPagination::Rails
+    #user-activity
+      = render_activities(@activities)
+    = js_will_paginate @activities

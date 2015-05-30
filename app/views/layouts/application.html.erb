@@ -16,12 +16,12 @@
     <div class="wrap-container">
       <%= render 'shared/header' %>
       <%= render 'shared/flash_messages' %>
-      <div class="row">
+      <div class="row body">
         <div class="large-9 columns" role="content">
           <%= yield %>
         </div>
       </div>
+      <%= render "shared/footer" %>
     </div>
-    <%= render "shared/footer" %>
   </body>
 </html>

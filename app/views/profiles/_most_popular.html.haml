@@ -1,6 +1,9 @@
 %ul.pricing-table
-  %h3
-    Your most popular movies
-  - @most_popular_movies.each do |movie|
-    %h5
-      = link_to movie.title, movie_path(movie)
+  -if @most_popular_movies.any?
+    %li.bullet-item
+      Your most popular movies
+    - @most_popular_movies.each do |movie|
+      %li.bullet-item
+        = link_to movie.title, movie_path(movie)
+  -else
+    %h4 No popular movies yet

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'pages/:page', to: 'pages#home'
+
   get 'searches', to: 'searches#index', as: :search
   get 'search', to: 'searches#search_movie_db', as: :search_moviedb
   get 'search/:movie_id', to: 'searches#find_movie_db', as: :find_moviedb

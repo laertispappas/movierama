@@ -1,4 +1,10 @@
+= render partial: 'movies/joyride'
 = render 'shared/sortable'
 #movies
   = render @movies
 = js_will_paginate @movies
+
+- if cookies[:joyride] == true
+  :javascript
+    $(document).foundation('joyride', 'start');
+  - cookies[:joyride] = false

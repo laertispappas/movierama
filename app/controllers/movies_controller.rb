@@ -1,6 +1,4 @@
 class MoviesController < ApplicationController
-  respond_to :html, :js
-
   include Commentable  # concern
 
   before_action :authenticate_user!, except: [:index, :show]
@@ -15,6 +13,7 @@ class MoviesController < ApplicationController
   # In this way we hit the database only from this action and in view we check if @current_user_movie_[likes hates]_ids.include?(movie.id)
   # @current_user_movie_likes/hates_ids is a subset array of @movies and contains the movie ids the current_user has voted on
   def index
+    cookies[:joyride] ||= true
     # sort_column, sort_direction are helper methods defined in Application controller
     if params[:sort].present?
       @movies = Movie.includes(:user).sort_by(sort_column, sort_direction).paginate(page: params[:page], per_page: 10)

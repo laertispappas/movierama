@@ -1,0 +1,10 @@
+$('#user-activity').fadeOut(200);
+$('#user-activity').empty();
+
+$(this).scrollTop(0);
+
+$('#user-activity').append('<%= escape_javascript render_activities(@activities) %>');
+
+$('.pagination').replaceWith('<%= escape_javascript(js_will_paginate @activities) %>');
+$('#user-activity').fadeIn(200);
+

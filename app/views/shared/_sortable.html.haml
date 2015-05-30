@@ -1,15 +1,16 @@
 .row
   .small-12.columns
     .sub-nav
-      %p.left
-        Sort by:
-      %dl.sub-nav
-        %dd{ class: "#{ 'active' if params[:sort] == 'likes' }" }
-          = sortable 'likes', 'Likes'
-          = sortable_arrow if params[:sort] == 'likes'
-        %dd{ class: "#{ 'active' if params[:sort] == 'hates' }" }
-          = sortable 'hates', 'Hates'
-          = sortable_arrow if params[:sort] == 'hates'
-        %dd{ class: "#{ 'active' if params[:sort] == 'date' }" }
-          = sortable 'date', 'Date'
-          = sortable_arrow if params[:sort] == 'date'
+      .panel{id: "#{user_signed_in? ? 'sort' : 'firstStop'}"}
+        %p.left
+          Sort by:
+          %dl.sub-nav
+            %dd{ class: "#{ 'active' if params[:sort] == 'likes' }" }
+              = sortable 'likes', 'Likes'
+              = sortable_arrow if params[:sort] == 'likes'
+            %dd{ class: "#{ 'active' if params[:sort] == 'hates' }" }
+              = sortable 'hates', 'Hates'
+              = sortable_arrow if params[:sort] == 'hates'
+            %dd{ class: "#{ 'active' if params[:sort] == 'date' }" }
+              = sortable 'date', 'Date'
+              = sortable_arrow if params[:sort] == 'date'

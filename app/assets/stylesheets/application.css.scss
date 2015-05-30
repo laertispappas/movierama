@@ -25,3 +25,32 @@ html.turbolinks-progress-bar::before {
 .wrap-container {
   margin-top: 1%;
 }
+
+
+body{
+  background-color: #eee;
+  height: 100%;
+}
+.body{
+  padding:10px;
+  padding-bottom:100px;   /* Height of the footer */
+}
+.panel {
+  background: #fff;
+}
+
+.wrap-container{
+  min-height:100%;
+  position:relative;
+}
+
+footer {
+  position:absolute;
+  bottom:-50px;
+  width:100%;
+  height:100px;   /* Height of the footer */
+}
+
+h5 small {
+  font-size: 70%;
+}

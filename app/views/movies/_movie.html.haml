@@ -1,26 +1,30 @@
 .panel.movie
   .header.row
-    .left
-      %h3
+    .left.columns.small-12
+      %h3.text-center
         = link_to_unless_current movie.title, movie_path(movie)
     .right
       - if user_signed_in? and current_user == movie.user
         = link_to '[Edit]', edit_movie_path(movie)
-  %h6
-    Posted by
-    - if user_signed_in? and movie.user == current_user
-      = link_to 'You', user_movies_path(movie.user.id)
-    - else
-      = link_to movie.user.fullname, user_movies_path(movie.user.id)
-    = time_ago_in_words movie.created_at
-    ago
-
+    %hr
+  .row
+    .small-12.columns
+      %h5
+        Posted by
+        - if user_signed_in? and movie.user == current_user
+          = link_to 'You', user_movies_path(movie.user.id)
+        - else
+          = link_to movie.user.fullname, user_movies_path(movie.user.id)
+        %small
+          = time_ago_in_words movie.created_at
+          ago
   .row
     .small-12.columns
       %p
         = simple_format movie.description
     .small-12.columns
       .movie-footer{class: "movie-#{movie.id}"}
+        %hr
         - if user_signed_in?
           - liked = false # flags to check if users has liked or hated a movie.
           - hated = false

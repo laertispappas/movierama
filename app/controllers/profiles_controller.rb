@@ -13,7 +13,11 @@ class ProfilesController < ApplicationController
   # user activity
   def show
     @activities = PublicActivity::Activity.order("created_at desc").where(owner_id: @user.id, owner_type: "User").paginate(page: params[:page], per_page: 10)
-    @most_popular_movies = @user.movies.order(:cached_votes_up => :desc).limit(5)
+    @most_popular_movies ||= @user.movies.order(:cached_votes_up => :desc).limit(5)
+    respond_to do |format|
+      format.html {  }
+      format.js { render :js, file: 'profiles/show' }
+    end
   end
 
   def movies
