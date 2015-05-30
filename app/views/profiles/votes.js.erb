@@ -1,2 +1,1 @@
-$('#movies').append('<%= escape_javascript render(@movies) %>');
-$('.pagination').replaceWith('<%= escape_javascript(will_paginate @movies, renderer: FoundationPagination::Rails) %>');
+<%= render partial: 'shared/ajax_pagination' %>

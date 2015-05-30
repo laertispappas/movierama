@@ -1,4 +1,4 @@
 = render 'shared/sortable'
 #movies
   = render @movies
-= will_paginate @movies, renderer: FoundationPagination::Rails
+= js_will_paginate @movies

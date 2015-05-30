@@ -29,28 +29,6 @@ $(document).on("click", "#searched-movie a", function(){
     }});
 });
 
-$(document).ready(function() {
-    $('.pagination a').on('click', function (e) {
-        e.preventDefault();
-        var url = $(this).attr('href');
-        if (url) {
-            $("#movies").empty();
-            $('.pagination').text("Please Wait...");
-//            $.getScript(url);
-                var data;
-                $.ajax({
-                    cacheRequest: true,
-                    type: "GET",
-                    url: url,
-                    dataType: "script",
-                    success: function(data) {
-                        console.log(data)
-                    }
-                });
-        }
-    });
-});
-
 /* uncomment for infinite scrolling */
 /*
 $(document).ready(function() {
