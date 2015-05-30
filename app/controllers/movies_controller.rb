@@ -26,7 +26,7 @@ class MoviesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js { render :js, file: 'movies/js/index' }
     end
 
   end
@@ -42,10 +42,8 @@ class MoviesController < ApplicationController
     respond_to do |format|
       if @movie.update(movie_params)
         format.html { redirect_to @movie, notice: 'Movie was successfully updated.' }
-        format.json { render json: @movie, status: :ok, location: @movie }
       else
         format.html { render :edit }
-        format.json { render json: @movie.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -53,9 +51,9 @@ class MoviesController < ApplicationController
   def show
     if current_user
       @rating = Rating.find_or_initialize_by(user_id: current_user.id, movie_id: @movie.id)
-#      similar_movie_ids = current_user.recommendation_for @movie
-#      @recommended_movies = Movie.where(id: similar_movie_ids)
-        @recommended_movies = []
+      similar_movie_ids = current_user.recommendation_for @movie
+      @recommended_movies = Movie.where(id: similar_movie_ids)
+      # @recommended_movies = []
       # no need to call current_user_voted_movies_ids here just check if has voted on this movie
       @current_user_movie_likes_ids = current_user.voted_up_on?(@movie) ? [@movie.id] : []
       @current_user_movie_hates_ids = current_user.voted_down_on?(@movie) ? [@movie.id] : []
@@ -87,7 +85,7 @@ class MoviesController < ApplicationController
     @movie.update_reddit_score
     respond_to do |format|
       format.html { redirect_to(:back) }
-      format.js {}
+      format.js { render :js, file: 'movies/js/like' }
     end
   end
 
@@ -96,7 +94,7 @@ class MoviesController < ApplicationController
     @movie.update_reddit_score
     respond_to do |format|
       format.html { redirect_to(:back) }
-      format.js
+      format.js { render :js, file: 'movies/js/hate' }
     end
   end
 
@@ -105,10 +103,9 @@ class MoviesController < ApplicationController
     @movie.update_reddit_score
     respond_to do |format|
       format.html { redirect_to(:back) }
-      format.js { }
+      format.js { render :js, file: 'movies/js/unvote' }
     end
   end
-
 
   private
   def movie_params

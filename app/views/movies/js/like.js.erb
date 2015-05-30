@@ -4,6 +4,7 @@ total_hates = <%= @movie.cached_votes_down %>
 
 current_movie = ".movie-<%= @movie.id %> "
 
+
 // if total_votes > 1 just update the counters
 if(total_votes > 1){
     // update left footer
@@ -14,9 +15,7 @@ if(total_votes > 1){
     // update right footer
     $(current_movie+'#unvote').empty();
     $(current_movie+'#unvote').append('You like this movie | <%= j link_to 'Unlike', unvote_movie_path(@movie), method: :put, remote: true %>');
-
-
-// movie has one like and this is the first like
+    // movie has one like and this is the first like
 }else{
     // update left footer
     $(current_movie+'#votes').empty();
@@ -26,5 +25,6 @@ if(total_votes > 1){
     // update right footer
     $(current_movie+'#unvote').empty();
     $(current_movie+'#unvote').append('You like this movie | <%= j link_to 'Unlike', unvote_movie_path(@movie), method: :put, remote: true %>');
-
 }
+
+<%= render partial: 'movies/js/shared/progress_bar' %>

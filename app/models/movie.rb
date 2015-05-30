@@ -41,6 +41,20 @@ class Movie < ActiveRecord::Base
     self.user == user
   end
 
+  # return percentage (%) of likes
+  def likes_percentage
+    self.cached_votes_up * 100 / self.cached_votes_total
+  rescue ZeroDivisionError
+    return 0
+  end
+
+  # return hate percentage
+  def hates_percentage
+    self.cached_votes_down * 100 / self.cached_votes_total
+  rescue ZeroDivisionError
+    return 0
+  end
+
   private
   def picture_size
     if picture.size > 5.megabytes

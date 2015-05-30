@@ -29,3 +29,5 @@ if(total_votes > 1){
     $(current_movie+'#unvote').empty();
     $(current_movie+'#unvote').append('You hate this movie | <%= j link_to 'Unhate', unvote_movie_path(@movie), method: :put, remote: true %>');
 }
+
+<%= render partial: 'movies/js/shared/progress_bar' %>

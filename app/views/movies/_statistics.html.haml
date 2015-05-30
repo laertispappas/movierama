@@ -1,0 +1,25 @@
+
+.total
+  Total:
+  = @movie.cached_votes_total
+
+.left
+  Likes:
+.row
+  .small-6.columns
+    .progress#likes-progress{style: "width: 0%"}
+      %span.meter
+        = @movie.likes_percentage.to_s + '%'
+.left
+  Hates:
+.row
+  .small-6.columns
+    .progress.alert#hates-progress{style: "width: 0%"}
+      %span.meter
+        = @movie.hates_percentage.to_s + '%'
+
+:javascript
+  $(document).ready(function(){
+    $('#likes-progress').animate({width: "#{@movie.likes_percentage}%"});
+    $('#hates-progress').animate({width: "#{@movie.hates_percentage}%"});
+  });
