@@ -25,7 +25,6 @@ $(document).on("click", "#searched-movie a", function(){
         $("#searched-movie").empty();
         $("#movie_title").val(result.title);
         $("#movie_description").val(result.overview)
-
     }});
 });
 

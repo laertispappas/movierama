@@ -42,7 +42,7 @@ class MoviesController < ApplicationController
     respond_to do |format|
       if @movie.update(movie_params)
         format.html { redirect_to @movie, notice: 'Movie was successfully updated.' }
-        format.json { render :show, status: :ok, location: @movie }
+        format.json { render json: @movie, status: :ok, location: @movie }
       else
         format.html { render :edit }
         format.json { render json: @movie.errors, status: :unprocessable_entity }
@@ -53,9 +53,9 @@ class MoviesController < ApplicationController
   def show
     if current_user
       @rating = Rating.find_or_initialize_by(user_id: current_user.id, movie_id: @movie.id)
-      similar_movie_ids = current_user.recommendation_for @movie
-      @recommended_movies = Movie.where(id: similar_movie_ids)
-
+#      similar_movie_ids = current_user.recommendation_for @movie
+#      @recommended_movies = Movie.where(id: similar_movie_ids)
+        @recommended_movies = []
       # no need to call current_user_voted_movies_ids here just check if has voted on this movie
       @current_user_movie_likes_ids = current_user.voted_up_on?(@movie) ? [@movie.id] : []
       @current_user_movie_hates_ids = current_user.voted_down_on?(@movie) ? [@movie.id] : []
@@ -80,13 +80,14 @@ class MoviesController < ApplicationController
 
   # For like/hate/unvote action we could like/hate/unvote directly without checking if user has already liked/hated/unvoted. We
   # can do it because we have binary votes. So we have 2 choices. 1) Check if user has voted so we make 1 db call and then if he has
-  # voted redirect him to root_url. else if not, vote for movie so in sum we make 2 db calls.
+  # voted redirect him to root_url. else if not, vote for movie so in sum we make 2 db calls for this approach.
   # 2) If we directly vote on movie we make 1 db call and the result is the same because of binary votes. We implement the 2nd approach.
   def like
     @movie.upvote_by current_user
     @movie.update_reddit_score
     respond_to do |format|
       format.html { redirect_to(:back) }
+      format.js {}
     end
   end
 
@@ -95,6 +96,7 @@ class MoviesController < ApplicationController
     @movie.update_reddit_score
     respond_to do |format|
       format.html { redirect_to(:back) }
+      format.js
     end
   end
 
@@ -103,6 +105,7 @@ class MoviesController < ApplicationController
     @movie.update_reddit_score
     respond_to do |format|
       format.html { redirect_to(:back) }
+      format.js { }
     end
   end
 

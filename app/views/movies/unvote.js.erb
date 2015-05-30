@@ -1,0 +1,42 @@
+total_votes = <%= @movie.cached_votes_total %>
+total_likes = <%= @movie.cached_votes_up %>
+total_hates = <%= @movie.cached_votes_down %>
+
+action = $('#unvote a').text();
+current_movie = ".movie-<%= @movie.id %> "
+
+// if total_votes > 1 just update the counters
+if(total_votes > 1){
+    switch (action){
+        case 'Unlike':
+            $('#votes').empty();
+            $('#votes').append('<%= pluralize(@movie.cached_votes_up, 'like') %>');
+            $('#votes').append('<%= j link_to(pluralize(@movie.cached_votes_down, 'hate'), hate_movie_path(@movie), method: :put, remote: true) %>');
+
+            // remove and show new unvote link
+            $('#unvote').empty();
+            $('#unvote').append('You like this movie | <%= j link_to 'Like', unvote_movie_path(@movie), method: :put, remote: true %>');
+            break;
+        case 'Unhate':
+            $('#votes').empty();
+            $('#votes').append('<%= pluralize(@movie.cached_votes_up, 'like') %>');
+            $('#votes').append('<%= j link_to(pluralize(@movie.cached_votes_down, 'hate'), hate_movie_path(@movie), method: :put, remote: true) %>');
+
+            // remove and show new unvote link
+            $('#unvote').empty();
+            $('#unvote').append('You like this movie | <%= j link_to 'Like', unvote_movie_path(@movie), method: :put, remote: true %>');
+            break;
+        default:
+            alert('Error');
+            break;
+    }
+// movie has zero likes and zero votes
+}else{
+    // clear left and right footer
+    $(current_movie+'#votes').empty();
+    $(current_movie+'#unvote').empty();
+
+    // append like and hate links
+    $(current_movie+'#votes').append('<%= j link_to(pluralize(@movie.cached_votes_up, 'like'), like_movie_path(@movie), method: :put, remote: true) %> ');
+    $(current_movie+'#votes').append('<%= j link_to(pluralize(@movie.cached_votes_down, 'hate'), hate_movie_path(@movie), method: :put, remote: true) %>');
+}

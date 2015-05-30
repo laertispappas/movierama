@@ -20,7 +20,7 @@
       %p
         = simple_format movie.description
     .small-12.columns
-      .movie-footer
+      .movie-footer{class: "movie-#{movie.id}"}
         - if user_signed_in?
           - liked = false # flags to check if users has liked or hated a movie.
           - hated = false
@@ -30,28 +30,35 @@
               = pluralize(movie.cached_votes_up, 'like')
               = pluralize(movie.cached_votes_down, 'hate')
             - else # movie is not created by current user
-              - if(movie.cached_votes_total == 0)    # if no votes yet be the first to vote
-                Be the first one to vote this movie:
-                = link_to 'like', like_movie_path(movie), method: :put
-                = link_to 'hate', hate_movie_path(movie), method: :put
-              - else # movie has some votes show likes and hates
-                - if @current_user_movie_likes_ids.include?(movie.id)
-                  - liked = true
-                  - hated = false
-                - elsif @current_user_movie_hates_ids.include?(movie.id)
-                  - liked = false
-                  - hated = true
-                = link_to_if !liked, pluralize(movie.cached_votes_up, 'like'), like_movie_path(movie), method: :put
-                = link_to_if !hated, pluralize(movie.cached_votes_down, 'hate'), hate_movie_path(movie), method: :put
-          .right
+              #votes
+                - if(movie.cached_votes_total == 0)    # if no votes yet be the first to vote
+                  %span#be-the-first
+                    Be the first to vote this movie:
+                  %span#likes
+                    = link_to 'like', like_movie_path(movie), method: :put, remote: true
+                  %span#hates
+                    = link_to 'hate', hate_movie_path(movie), method: :put, remote: true
+                - else # movie has some votes show likes and hates
+                  - if @current_user_movie_likes_ids.include?(movie.id)
+                    - liked = true
+                    - hated = false
+                  - elsif @current_user_movie_hates_ids.include?(movie.id)
+                    - liked = false
+                    - hated = true
+                  %span#likes
+                    = link_to_if !liked, pluralize(movie.cached_votes_up, 'like'), like_movie_path(movie), method: :put, remote: true
+                  %span#hates
+                    = link_to_if !hated, pluralize(movie.cached_votes_down, 'hate'), hate_movie_path(movie), method: :put, remote: true
+          .right#unvote
+            %span#unvote-text
             - if liked  # if current user has liked this movie
               You like this movie
               |
-              = link_to 'Unlike', unvote_movie_path(movie), method: :put
+              = link_to 'Unlike', unvote_movie_path(movie), method: :put, id: 'unvote-link', remote: true
             - elsif hated
               You hate this movie
               |
-              = link_to 'Unhate', unvote_movie_path(movie), method: :put
+              = link_to 'Unhate', unvote_movie_path(movie), method: :put, id: 'unvote-link', remote: true
         - else  # not signed in
           - if movie.cached_votes_total > 0
             = pluralize(movie.cached_votes_up, 'like')

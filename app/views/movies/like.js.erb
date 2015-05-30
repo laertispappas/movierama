@@ -1,0 +1,30 @@
+total_votes = <%= @movie.cached_votes_total %>
+total_likes = <%= @movie.cached_votes_up %>
+total_hates = <%= @movie.cached_votes_down %>
+
+current_movie = ".movie-<%= @movie.id %> "
+
+// if total_votes > 1 just update the counters
+if(total_votes > 1){
+    // update left footer
+    $(current_movie+'#votes').empty();
+    $(current_movie+'#votes').append('<%= pluralize(@movie.cached_votes_up, 'like') %> ');
+    $(current_movie+'#votes').append('<%= j link_to(pluralize(@movie.cached_votes_down, 'hate'), hate_movie_path(@movie), method: :put, remote: true) %>');
+
+    // update right footer
+    $(current_movie+'#unvote').empty();
+    $(current_movie+'#unvote').append('You like this movie | <%= j link_to 'Unlike', unvote_movie_path(@movie), method: :put, remote: true %>');
+
+
+// movie has one like and this is the first like
+}else{
+    // update left footer
+    $(current_movie+'#votes').empty();
+    $(current_movie+'#votes').append(total_likes + ' like ');
+    $(current_movie+'#votes').append('<%= j link_to(pluralize(@movie.cached_votes_down, 'hate'), hate_movie_path(@movie), method: :put, remote: true) %>');
+
+    // update right footer
+    $(current_movie+'#unvote').empty();
+    $(current_movie+'#unvote').append('You like this movie | <%= j link_to 'Unlike', unvote_movie_path(@movie), method: :put, remote: true %>');
+
+}
