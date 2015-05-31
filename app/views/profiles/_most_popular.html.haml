@@ -1,7 +1,7 @@
 %ul.pricing-table
   -if @most_popular_movies.any?
     %li.bullet-item
-      Your most popular movies
+      Most popular movies
     - @most_popular_movies.each do |movie|
       %li.bullet-item
         = link_to movie.title, movie_path(movie)
