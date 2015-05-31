@@ -13,10 +13,10 @@
         / Right Nav Section
         %ul.right
           - if user_signed_in?
-            %li.active
-              = link_to 'New movie', new_movie_path, class: 'button'
             %li
               = link_to 'Profile', profile_path(current_user)
+            %li.active
+              = link_to 'New movie', new_movie_path, class: 'button'
             %li.has-dropdown
               %a{:href => "#"} Account
               %ul.dropdown

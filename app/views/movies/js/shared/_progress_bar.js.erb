@@ -3,3 +3,5 @@ $('#likes-progress .meter').text("<%= @movie.likes_percentage %>%")
 
 $('#hates-progress').animate({width: "<%= @movie.hates_percentage %>%"});
 $('#hates-progress .meter').text("<%= @movie.hates_percentage %>%")
+
+$('#total-votes').text('<%= @movie.cached_votes_total %>');

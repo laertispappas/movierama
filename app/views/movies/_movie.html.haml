@@ -1,23 +1,17 @@
 .panel.movie
   .header.row
     .left.columns.small-12
-      %h3.text-center
+      %h3
         = link_to_unless_current movie.title, movie_path(movie)
     .right
-      - if user_signed_in? and current_user == movie.user
-        = link_to '[Edit]', edit_movie_path(movie)
+      = edit_movie_link movie
+    %h6{style: 'margin-left: 10px; margin-top: 45px;'}
+      Posted by
+      = posted_by_link(movie)
+      %span{style: "font-size: 85%"}
+        = time_ago_in_words movie.created_at
+        ago
     %hr
-  .row
-    .small-12.columns
-      %h5
-        Posted by
-        - if user_signed_in? and movie.user == current_user
-          = link_to 'You', user_movies_path(movie.user.id)
-        - else
-          = link_to movie.user.fullname, user_movies_path(movie.user.id)
-        %small
-          = time_ago_in_words movie.created_at
-          ago
   .row
     .small-12.columns
       %p
@@ -44,15 +38,17 @@
                     = link_to 'hate', hate_movie_path(movie), method: :put, remote: true
                 - else # movie has some votes show likes and hates
                   - if @current_user_movie_likes_ids.include?(movie.id)
+                    %span#hates
+                    = pluralize(movie.cached_votes_up, 'like')
+                    = link_to pluralize(movie.cached_votes_down, 'hate'), hate_movie_path(movie), method: :put, remote: true
                     - liked = true
                     - hated = false
                   - elsif @current_user_movie_hates_ids.include?(movie.id)
+                    %span#likes
+                    = link_to pluralize(movie.cached_votes_up, 'like'), like_movie_path(movie), method: :put, remote: true
+                    = pluralize(movie.cached_votes_down, 'hate')
                     - liked = false
                     - hated = true
-                  %span#likes
-                    = link_to_if !liked, pluralize(movie.cached_votes_up, 'like'), like_movie_path(movie), method: :put, remote: true
-                  %span#hates
-                    = link_to_if !hated, pluralize(movie.cached_votes_down, 'hate'), hate_movie_path(movie), method: :put, remote: true
           .right#unvote
             %span#unvote-text
             - if liked  # if current user has liked this movie

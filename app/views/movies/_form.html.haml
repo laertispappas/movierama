@@ -1,17 +1,18 @@
-= simple_form_for @movie, html: { multipart: true } do |f|
-  = f.input :title
-  = f.input :description, input_html: { rows: "8" }
+.panel
+  = simple_form_for @movie, html: { multipart: true } do |f|
+    = f.input :title
+    = f.input :description, input_html: { rows: "8" }
 
-  %span.picture
-    = f.label :picture
-    = f.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
+    %span.picture
+      = f.label :picture
+      = f.file_field :picture, accept: 'image/jpeg,image/gif,image/png'
 
-  = f.button :submit, class: "button"
+    = f.button :submit, class: "button"
 
-:javascript
-  $("#movie_picture").bind("change", function(){
-    size_in_mb = this.files[0].size/1024/1024;
-    if(size_in_mb > 5) {
-      alert("Maximum file size is 5MB. Please choose a smaller file.");
-    }
-  });
+  :javascript
+    $("#movie_picture").bind("change", function(){
+      size_in_mb = this.files[0].size/1024/1024;
+      if(size_in_mb > 5) {
+        alert("Maximum file size is 5MB. Please choose a smaller file.");
+      }
+    });

@@ -1,0 +1,11 @@
+.recommendations.panel
+  - if user_signed_in?
+    - if @recommended_movies.any?
+      %h3 Recommended for You
+      - @recommended_movies.each do |recommended|
+        %h5
+          = link_to recommended.title, movie_path(recommended.id)
+    - else
+      %h5 No recommendations for you yet
+  - else
+    %h4 Please sign in to start receiving recommedations for movies

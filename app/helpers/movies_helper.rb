@@ -13,5 +13,19 @@ module MoviesHelper
       "<i class='fi-arrow-down'></i>".html_safe
     end
   end
+
+  def edit_movie_link(movie)
+    if user_signed_in? and current_user == movie.user
+      link_to '[Edit]', edit_movie_path(movie)
+    end
+  end
+
+  def posted_by_link(movie)
+      if user_signed_in? and movie.user == current_user
+        link_to 'You', user_movies_path(movie.user.id)
+      else
+        link_to movie.user.fullname, user_movies_path(movie.user.id)
+      end
+  end
 end
 
