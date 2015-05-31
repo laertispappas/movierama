@@ -32,7 +32,6 @@ class ProfilesController < ApplicationController
       @movies = @user.movies.order(:reddit_score => :desc).paginate(page: params[:page], per_page: 10)
     end
     current_user_voted_movies_ids(@movies)  # inherited from application controller
-
     respond_to do |format|
       format.html
       format.js

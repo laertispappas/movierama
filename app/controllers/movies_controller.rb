@@ -40,6 +40,7 @@ class MoviesController < ApplicationController
   def update
     respond_to do |format|
       if @movie.update(movie_params)
+        flash.now[:success] = "Movie updated"
         format.html { redirect_to @movie, notice: 'Movie was successfully updated.' }
       else
         format.html { render :edit }
@@ -66,10 +67,10 @@ class MoviesController < ApplicationController
     respond_to do |format|
       if @movie.save
         @movie.create_activity :create, owner: current_user
-        flash[:success] = "Movie was successfully created."
+        flash.now[:success] = "Movie was successfully created."
         format.html { redirect_to @movie }
       else
-        flash[:alert] = 'There was a problem creating movie'
+        flash.now[:alert] = 'There was a problem creating movie'
         format.html { render :new }
       end
     end
