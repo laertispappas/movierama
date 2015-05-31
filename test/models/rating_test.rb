@@ -38,5 +38,4 @@ class RatingTest < ActiveSupport::TestCase
     assert_not @rating.valid?
   end
 
-
 end

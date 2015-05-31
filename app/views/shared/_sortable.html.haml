@@ -4,7 +4,7 @@
       .panel{id: "#{user_signed_in? ? 'sort' : 'firstStop'}"}
         %p.left
           Sort by:
-          %dl.sub-nav
+          %dl.sub-nav.sort-links
             %dd{ class: "#{ 'active' if params[:sort] == 'likes' }" }
               = sortable 'likes', 'Likes'
               = sortable_arrow if params[:sort] == 'likes'

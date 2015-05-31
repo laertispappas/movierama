@@ -1,6 +1,23 @@
+
+// ajax for pagination
 $('#movies').fadeOut(200);
 $('#movies').empty();
 $(this).scrollTop(0);
 $('#movies').append('<%= escape_javascript render(@movies) %>');
 $('.pagination').replaceWith('<%= escape_javascript(js_will_paginate @movies) %>');
 $('#movies').fadeIn(200);
+
+
+// ajax for sorting
+// sort_column, sort_direction helpers defined in  application controller
+// sortable and sortable_arrow helper methods defined in movies_helper
+<% if params[:sort].present? %>
+    link_clicked_id = "#sort-<%= sort_column %>";
+    sort_direction = '<%= sort_direction %>'
+    $('.sort-links dd').removeClass('active');
+    $('.sort-links dd i').remove();
+
+    $(link_clicked_id).parent().addClass('active');
+    $(link_clicked_id).replaceWith('<%= j sortable(sort_column, params[:sort]) %>');
+    $(link_clicked_id).after('<%= j sortable_arrow %>');
+<% end %>

@@ -3,8 +3,9 @@ module MoviesHelper
   # return a link to sort. Helper for biderectional sorting
   def sortable(column, title)
     direction = (column == params[:sort] && params[:direction] == "desc") ? "asc" : "desc"
-    link_to title, {:sort => column, :direction => direction, query: params[:query]}, class: 'sort-action'
+    link_to title, {:sort => column, :direction => direction, query: params[:query]}, class: 'sort-action', remote: true, id: 'sort-'+column
   end
+
 
   def sortable_arrow
     if params[:direction] == 'asc'

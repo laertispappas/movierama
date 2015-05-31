@@ -25,10 +25,9 @@ class MoviesController < ApplicationController
     current_user_voted_movies_ids(@movies)
 
     respond_to do |format|
-      format.html
+      format.html {}
       format.js { render :js, file: 'movies/js/index' }
     end
-
   end
 
   def new

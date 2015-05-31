@@ -2,7 +2,8 @@
 
 - if @movies.any?
   = render 'shared/sortable'
-  = render @movies
+  #movies
+    = render @movies
   = will_paginate @movies, renderer: FoundationPagination::Rails
 - else
   %h3 No movie found
