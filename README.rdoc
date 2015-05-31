@@ -54,4 +54,4 @@ demo: https://workable.herokuapp.com
     * Change suggestion to run in background
     * Add follow user functionality
     * Implement a feed page
-    * Send emails on background
+    * Send emails in background
