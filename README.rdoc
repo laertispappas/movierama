@@ -28,8 +28,8 @@ demo: https://workable.herokuapp.com
 * System dependencies: Imagemagick
 
 * Configuration
-    - EMAIL (smtp on production (config/environments/production), mailcatcher on development)
-    - set host your on: config.action_mailer.default_url_options = { host: 'yourhost.com' }
+    - EMAIL (smtp on production (config/environments/production.rb), mailcatcher on development)
+    - set your host on config/environments/production.rb: config.action_mailer.default_url_options = { host: 'yourhost.com' }
     - Database configuration: config/database.yml
     - Set environment variables for Amazon AWS: config/initializers/carrier_wave.rb (S3_ACCESS_KEY, S3_SECRET_KEY, S3_BUCKET)
     - Set environment variables for Google auth: config/initializers/devise.rb (GOOGLE_APP_ID GOOGLE_APP_SECRET)
@@ -37,7 +37,7 @@ demo: https://workable.herokuapp.com
 * Database creation
     - rake db:setup
 
-* How to run the test suite
+* Run the test suite
     rake test
 
 * Deployment instructions for heroku
