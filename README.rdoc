@@ -3,28 +3,55 @@
 demo: https://workable.herokuapp.com
 
 === Features:
+* Login/Register account
+* Sign in with google
+* Create movies
+    - Vote movies (like/hate/unhate/unlike)
+    - Rate movies (star rating)
+    - Search movies
+    - Sort movies by like, hate or date created
+    - Upload movie picture
+* Images stored on Amazon AWS S3
+* User profile page
+    - Activity
+    - Most popular
+    - Movies created
+    - Votes submitted
+* Nested comments
+* AJAX
+* Recommendation (Not efficient just for demonstration. Must implement it as a background job)
+* By default: Index movies based on reddit algorithm
 
-
-Things you may want to cover:
+=== Dependencies
 * Ruby version: 2.2.1
 * Rails version: 4.2.0
-
 * System dependencies: Imagemagick
 
 * Configuration
     - EMAIL (smtp on production (config/environments/production), mailcatcher on development)
-    - Amazon AWS (production env variables)
-    -
-* Database creation
+    - set host your on: config.action_mailer.default_url_options = { host: 'yourhost.com' }
+    - Database configuration: config/database.yml
+    - Set environment variables for Amazon AWS: config/initializers/carrier_wave.rb (S3_ACCESS_KEY, S3_SECRET_KEY, S3_BUCKET)
+    - Set environment variables for Google auth: config/initializers/devise.rb (GOOGLE_APP_ID GOOGLE_APP_SECRET)
 
-* Database initialization
+* Database creation
+    - rake db:setup
 
 * How to run the test suite
+    rake test
 
-* Services (job queues, cache servers, search engines, etc.)
+* Deployment instructions for heroku
+    - clone repository: git clone https://github.com/laertispappas/movierama
+    - cd movierama
+    - heroku create
+    - set environment variables (see configuration): heoroku config:set SE_BUCKET=VALUE ...
+    - heroku run rake db:migrate
+    - git push heroku master
+    - rake db:migrate
 
-* Deployment instructions
-
-* ...
-
-Decorator
+=== TODO
+    * Use draper gem
+    * Change suggestion to run in background
+    * Add follow user functionality
+    * Implement a feed page
+    * Send emails on background

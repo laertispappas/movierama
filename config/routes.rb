@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   get 'pages/:page', to: 'pages#home'
 
   get 'searches', to: 'searches#index', as: :search
