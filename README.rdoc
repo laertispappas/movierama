@@ -1,11 +1,13 @@
-== MOVIERAMA
+== MOVIERAMA Ruby On Rails demo app
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+demo: https://workable.herokuapp.com
+
+=== Features:
+
 
 Things you may want to cover:
-
 * Ruby version: 2.2.1
+* Rails version: 4.2.0
 
 * System dependencies: Imagemagick
 
