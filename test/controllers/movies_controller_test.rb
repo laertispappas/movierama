@@ -212,14 +212,12 @@ class MoviesControllerTest < ActionController::TestCase
 
   test 'cannot unvote his own movie' do
     sign_in @user
-
     assert_equal @movie.user, @user
-
     assert_no_difference('ActsAsVotable::Vote.count') do
       put :unvote, { id: @movie.id }, session
     end
-
     assert_response :redirect
     assert_redirected_to root_url
   end
+
 end

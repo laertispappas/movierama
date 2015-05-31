@@ -20,6 +20,7 @@ class MoviesController < ApplicationController
     else
       @movies = Movie.includes(:user).order(:reddit_score => :desc).paginate(page: params[:page], per_page: 10)
     end
+
     # iherited from Application controller
     current_user_voted_movies_ids(@movies)
 
