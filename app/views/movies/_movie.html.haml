@@ -20,8 +20,6 @@
       .movie-footer{class: "movie-#{movie.id}"}
         %hr
         - if user_signed_in?
-          - liked = false # flags to check if users has liked or hated a movie.
-          - hated = false
           .left
             - # if this movie is current users movie show likes and hates with no link to vote
             - if movie.user == current_user # && movie.cached_votes_total > 0  uncomment this if we want to hide counter for 0 votes
@@ -41,14 +39,10 @@
                     %span#hates
                     = pluralize(movie.cached_votes_up, 'like')
                     = link_to pluralize(movie.cached_votes_down, 'hate'), hate_movie_path(movie), method: :put, remote: true
-                    - liked = true
-                    - hated = false
                   - elsif @current_user_movie_hates_ids.include?(movie.id)  # if current user hates this movie
                     %span#likes
                     = link_to pluralize(movie.cached_votes_up, 'like'), like_movie_path(movie), method: :put, remote: true
                     = pluralize(movie.cached_votes_down, 'hate')
-                    - liked = false
-                    - hated = true
                   - else  # current user does not hate neither likes this movie
                     %span#likes
                     = link_to pluralize(movie.cached_votes_up, 'like'), like_movie_path(movie), method: :put, remote: true
@@ -60,7 +54,7 @@
               You like this movie
               |
               = link_to 'Unlike', unvote_movie_path(movie), method: :put, id: 'unvote-link', remote: true
-            - elsif @current_user_movie_hates_ids.include?(movie.id)
+            - elsif @current_user_movie_hates_ids.include?(movie.id)  # if has hated this movie
               You hate this movie
               |
               = link_to 'Unhate', unvote_movie_path(movie), method: :put, id: 'unvote-link', remote: true
@@ -68,4 +62,3 @@
           - if movie.cached_votes_total > 0
             = pluralize(movie.cached_votes_up, 'like')
             = pluralize(movie.cached_votes_down, 'hate')
-            
